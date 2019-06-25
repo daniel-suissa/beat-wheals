@@ -1,0 +1,41 @@
+html, body {
+    height: 100%;
+}
+
+canvas {
+    border: 1px dotted green;
+    display: inline;
+    height: 100%;
+    width: 100%;
+}
+
+
+#wheel-container {
+		display: table;
+  		margin: 0 auto;
+  		border: 1px solid black;
+  		position: relative;
+  	}
+
+#hand{
+    position: absolute;
+    width: 4px; /* width of hour hand */
+    height: 30%; /* height of hour hand */
+    margin-left: -2px; /* set this value to 1/2 width */
+    margin-top: -2px; /* set this value to 1/2 width */
+    background: black;
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -moz-transform-origin: top;
+    -ms-transform-origin: top;
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    z-index: -1;
+    -moz-box-shadow: 0 0 3px gray;
+    -webkit-box-shadow: 0 0 3px gray;
+    box-shadow: 0 0 3px gray
+    height: 50%; /* height of sec hand */
+    background: red
+    }
