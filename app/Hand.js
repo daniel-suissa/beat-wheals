@@ -13,8 +13,8 @@ define([], function() {
 			// place hand in the middle of the canvas
 			const {top, left} = this.container.position(); 
 			this.handElem.css({
-				top: top + canvas.height / 2, 
-				left: left + canvas.width / 2})
+				top: top + this.container.height() / 2, 
+				left: left + this.container.width() / 2})
 		}
 
 		animate() {
