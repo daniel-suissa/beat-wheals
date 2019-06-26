@@ -12,11 +12,14 @@ define([], function() {
 		}
 	}
 
-	let beatTypes = [new BeatType('type1', '', '#32e5b2', DEFUALT_BEAT_RADIUS)]
+	let beatTypes = [new BeatType('type1', '', '#32e5b2', DEFUALT_BEAT_RADIUS),
+					new BeatType('type2', '', '#db0808', DEFUALT_BEAT_RADIUS + 3),
+					new BeatType('type3', '', '#4f4ad6', DEFUALT_BEAT_RADIUS + 6)]
 
 	class Beat {
 		constructor() {
-			this.type = beatTypes[DEFAULT_BEAT_TYPE]
+			this.typeIndex = DEFAULT_BEAT_TYPE
+			this.type = beatTypes[this.typeIndex]
 		}
 
 		draw(sk, x, y) {
@@ -24,7 +27,12 @@ define([], function() {
 			this.y = y
 			sk.fill(this.type.color)
 			sk.noStroke()
-			sk.ellipse(x,y,this.type.radius,this.type.radius)
+			sk.circle(x,y,this.type.radius)
+		}
+
+		clickAction(_x, _y) {
+			this.typeIndex = (this.typeIndex + 1) % beatTypes.length
+			this.type = beatTypes[this.typeIndex]
 		}
 	}
 

@@ -1,9 +1,8 @@
 /*
 TODO: 
- - extract drawing functions to p5
  - make half of each wheel a button
  - make beats clickable
- - clean fixDpi function
+ - separate interface from main
 */
 
 import * as p5 from './p5.min.js'
@@ -19,7 +18,7 @@ require(['./Wheel', './Hand'], function (Wheel, Hand) {
 			this.baseRadius = 75
 			this.stepRadius = 70
 			this.createHand();
-
+			this.createWheels();
 		}
 
 		createHand() {
@@ -29,6 +28,19 @@ require(['./Wheel', './Hand'], function (Wheel, Hand) {
 			this.hand = new Hand(xCenter, yCenter, length, 30)
 		}
 		
+		createWheels() {
+			this.wheels = []
+			const xCenter = this.width / 2;
+	    	const yCenter = this.height / 2;
+	    	const baseRadius = 75
+			const stepRadius = 70
+			//draw wheels outside in
+			for (var i = 0; i < this.wheel_amt ; i++) {
+				let radius = baseRadius + stepRadius * i
+				let wheel = new Wheel(radius, xCenter, yCenter)
+				this.wheels.push(wheel)
+			}
+		}
 
 		draw(sk) {
 			const xCenter = this.width / 2;
@@ -37,22 +49,41 @@ require(['./Wheel', './Hand'], function (Wheel, Hand) {
 			const stepRadius = 70
 			//draw wheels outside in
 			for (var i = this.wheel_amt - 1; i > -1 ; i--) {
-				let radius = baseRadius + stepRadius * i
-				let wheel = new Wheel(radius, xCenter, yCenter)
-				this.wheels.push(wheel)
-				wheel.draw(sk)
+				this.wheels[i].draw(sk)
 			}
 			this.hand.draw(sk)
+		}
+
+		getIntersectObj(sk, x, y) {
+			for(var i = 0; i < this.wheels.length; i++) {
+				let obj = this.wheels[i].getIntersectObj(sk, x, y)
+				if (obj != null) {
+					return obj
+				}
+			}
+			return null
+		}
+		mousePressed(sk, mouseX, mouseY) {
+			let obj = this.getIntersectObj(sk, mouseX, mouseY)
+
+			if (obj != null) {
+				obj.clickAction(mouseX, mouseY)
+			}
 		}
 	}
 
 	let intfc = new Interface();
 	let sketch = (sk) => {    
 		sk.setup = () => {
+
 			sk.createCanvas(window.innerWidth,window.innerHeight);
 		}, 
 		sk.draw = () => {
 			intfc.draw(sk)
+		}
+		sk.mouseClicked = () => {
+			sk.background('#ffffff')
+			intfc.mousePressed(sk, sk.mouseX, sk.mouseY)
 		}
 	}
 	const P5 = new p5(sketch);

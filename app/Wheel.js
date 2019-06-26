@@ -28,9 +28,36 @@ define(['./Beat', 'jquery'], function(Beat) {
 			for (var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]
 				const {x, y} = this.getBeatCenter(i)
-			  	beat.draw(sk, x, y)
+				beat.draw(sk, x, y)
 			}
+		}
 
+		// TODO: move dist function to common
+		getIntersectObj(sk, x, y) {
+			// if intersects a beat, returns the beat
+			
+
+			for(var i = 0; i < this.beats.length; i++) {
+				let beat = this.beats[i]
+				if (sk.dist(x, y, beat.x, beat.y) <= beat.type.radius) {
+					return beat
+				}
+			}
+			
+			// if intersects the wheel, returns the wheel
+			if (sk.dist(x, y, this.x, this.y) <= this.radius) {
+				return this
+			}
+			return null
+		}
+
+		clickAction(x, _y) {
+			if (x >= this.x) {
+				// right side of the circle adds a beat
+				this.beats.push(new Beat())
+			} else {
+				this.beats.pop()
+			}
 		}
 
 	}
