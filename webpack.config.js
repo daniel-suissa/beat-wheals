@@ -4,7 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname,'app'),
-    entry: './interface.js',
+    entry: './main.js',
     output: {
 		filename: "./[name].js",
 		publicPath: './dist/',
@@ -16,8 +16,13 @@ module.exports = {
             jQuery: "jquery"
         }),
     ],
-    /*optimization: {
-        	minimizer: [ new UglifyJsPlugin() ]
-        }*/
+    module: {
+    	rules: [
+    		{
+			    test: /\.(ogg|mp3|wav|mpe?g)$/i,
+			    use: 'file-loader'
+			}
+    	]
+    }
 };
 
