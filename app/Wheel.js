@@ -2,50 +2,59 @@
 //////Wheel
 define(['./Beat', 'jquery'], function(Beat) {
 	class Wheel {
-		constructor(radius,x ,y) {
+		constructor(sk, radius,x ,y) {
+			this.sk = sk
 			this.radius = radius
-			this.beats = [new Beat(), new Beat(), new Beat()]
+			this.beatNum = 1
+			this.beats = this.createBeats(this.beatNum)
 			this.x = x
 			this.y = y
 			this.strokeColor = '#000000'
 			this.fillColor = '#ffffff'
 		}
 
-		getBeatCenter(beatIndex) {
-			const radians = beatIndex * 2 * Math.PI / this.beats.length
-			const x = this.x + this.radius  * Math.sin(radians);
-			const y = this.y - this.radius  * Math.cos(radians);
+		createBeats(num) {
+			let beats = []
+			for(var i = 0; i < num; i++) {
+				const radians = i * 2 * Math.PI / num
+				let beat = new Beat(this.sk, radians)
+				beats.push(beat)
+			}
+			return beats
+		}
+
+		getBeatCenter(beat) {
+			const x = this.x + this.radius  * Math.sin(beat.radians);
+			const y = this.y - this.radius  * Math.cos(beat.radians);
 			return {x: x, y: y}
 		}
 
-		draw(sk) {
+		draw(handRotation) {
 			//draw wheel itself
-			sk.stroke(this.strokeColor)
-			sk.fill(this.fillColor)
-			sk.circle(this.x, this.y, 2 * this.radius)
+			this.sk.stroke(this.strokeColor)
+			this.sk.fill(this.fillColor)
+			this.sk.circle(this.x, this.y, 2 * this.radius)
 
 			//draw beats
 			for (var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]
-				const {x, y} = this.getBeatCenter(i)
-				beat.draw(sk, x, y)
+				const {x, y} = this.getBeatCenter(beat)
+				beat.draw(x,y, handRotation)
 			}
 		}
 
 		// TODO: move dist function to common
-		getIntersectObj(sk, x, y) {
+		getIntersectObj(x, y) {
 			// if intersects a beat, returns the beat
-			
-
 			for(var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]
-				if (sk.dist(x, y, beat.x, beat.y) <= beat.type.radius) {
+				if (this.sk.dist(x, y, beat.x, beat.y) <= beat.type.radius) {
 					return beat
 				}
 			}
 			
 			// if intersects the wheel, returns the wheel
-			if (sk.dist(x, y, this.x, this.y) <= this.radius) {
+			if (this.sk.dist(x, y, this.x, this.y) <= this.radius) {
 				return this
 			}
 			return null
@@ -54,9 +63,9 @@ define(['./Beat', 'jquery'], function(Beat) {
 		clickAction(x, _y) {
 			if (x >= this.x) {
 				// right side of the circle adds a beat
-				this.beats.push(new Beat())
-			} else {
-				this.beats.pop()
+				this.beats = this.createBeats(++this.beatNum)
+			} else if (this.beatNum > 0) {
+				this.beats = this.createBeats(--this.beatNum)
 			}
 		}
 

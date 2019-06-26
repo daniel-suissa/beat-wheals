@@ -1,8 +1,6 @@
 /*
 TODO: 
- - make half of each wheel a button
- - make beats clickable
- - separate interface from main
+ - change the draw function to 'update'
 */
 
 
@@ -12,11 +10,10 @@ import "p5/lib/addons/p5.sound";
 
 
 var count = 0
-require(['./interface'], function(Interface) {
-	let sketch = (sk) => {    
+require(['./Interface'], function(Interface) {
+	let sketch = (sk) => { 
 		sk.setup = () => {
-			sk.intfc = new Interface();
-			sk.song = sk.loadSound('./assets/bass_sample.mp3');
+			sk.intfc = new Interface(sk);
 			sk.createCanvas(window.innerWidth,window.innerHeight);
 		}, 
 		sk.draw = () => {
@@ -24,8 +21,7 @@ require(['./interface'], function(Interface) {
 		}
 		sk.mouseClicked = () => {
 			sk.background('#ffffff')
-			sk.song.play()
-			sk.intfc.mousePressed(sk, sk.mouseX, sk.mouseY)
+			sk.intfc.mousePressed()
 		}
 	}
 	const P5 = new p5(sketch);

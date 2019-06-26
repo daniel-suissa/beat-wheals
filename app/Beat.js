@@ -1,40 +1,62 @@
-///Beat
-let DEFAULT_BEAT_TYPE = 0
-let DEFUALT_BEAT_RADIUS = 15
-
-define([], function() {
+define(['./config'], function(config) {
 	class BeatType {
-		constructor(name, src, color, radius) {
+		constructor(sk, name, src, color, radius) {
 			this.name = name
-			this.src = src
+			if (src != '') {
+			    this.sound = sk.loadSound(src)
+			} else {
+				this.sound = null
+			}
 			this.color = color
 			this.radius = radius
 		}
 	}
 
-	let beatTypes = [new BeatType('type10', '', '#ffff', DEFUALT_BEAT_RADIUS),
-					new BeatType('type1', './assets/bass_sample.mp3', '#32e5b2', DEFUALT_BEAT_RADIUS + 5),
-					new BeatType('type2', './assets/clep_sample.mp3', '#db0808', DEFUALT_BEAT_RADIUS + 10),
-					new BeatType('type3', './assets/hh_sample_sample.mp3', '#4f4ad6', DEFUALT_BEAT_RADIUS + 15)]
-
 	class Beat {
-		constructor() {
-			this.typeIndex = DEFAULT_BEAT_TYPE
-			this.type = beatTypes[this.typeIndex]
+		constructor(sk, radians) {
+			this.sk = sk
+			this.radians = radians
+			this.typeIndex = config.beats.defaulTypeIndex
+			this.typeList = []
+			config.beats.types.forEach( (type) => {
+				this.typeList.push(new BeatType(
+					this.sk,
+					type.name, 
+					type.sound, 
+					type.color, 
+					type.radius
+					))
+			})
+			this.type = this.typeList[this.typeIndex]
+			this.prepareForHit = true
 		}
-
-		draw(sk, x, y) {
+		
+		draw(x, y, handRotation) {
 			this.x = x
 			this.y = y
-			sk.fill(this.type.color)
-			sk.noStroke()
-			sk.circle(x,y,this.type.radius)
+			this.sk.fill(this.type.color)
+			this.sk.noStroke()
+			this.sk.circle(x,y,this.type.radius)
+			const handDistance = Math.abs(handRotation - this.radians) 
+			if ( this.prepareForHit && this.type.sound != null && handDistance < 0.1) {
+				try {
+					this.type.sound.play()
+					this.prepareForHit = false
+				} catch (err) {
+					console.log("cant play")
+					this.prepareForHit = false
+				}
+			} else if (!this.prepareForHit && (handDistance > 0.1) ){
+				this.prepareForHit = true
+			}
 		}
 
 		clickAction(_x, _y) {
-			this.typeIndex = (this.typeIndex + 1) % beatTypes.length
-			this.type = beatTypes[this.typeIndex]
-
+			this.typeIndex = (this.typeIndex + 1) % this.typeList.length
+			this.type = this.typeList[this.typeIndex]
+			if (this.type.sound != null) {
+				this.type.sound.play()
+			}
 		}
 	}
 
