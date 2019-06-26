@@ -1,85 +1,61 @@
 /*
 TODO: 
- - place buttons on wheels
- - place buttons on beats
+ - extract drawing functions to p5
+ - make half of each wheel a button
+ - make beats clickable
  - clean fixDpi function
 */
+
+import * as p5 from './p5.min.js'
 
 var count = 0
 require(['./Wheel', './Hand'], function (Wheel, Hand) {
 	var Interface = class {
 		constructor() {
-			this.wheelContainer = $('#wheel-container')
-			this.canvas = $("<canvas>", {
-					id : "Canvas"
-				}).appendTo(this.wheelContainer);
-			this.context = this.canvas.get(0).getContext("2d");
 			this.wheels = [];
-			this.resize();
-			this.hand = new Hand(this.wheelContainer, 60)
-			this.x = this.wheelContainer.position().left
-			this.y = this.wheelContainer.position().top
 			this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+			this.wheel_amt = 4
+			this.baseRadius = 75
+			this.stepRadius = 70
+			this.createHand();
+
 		}
 
-		fixDpi() {
-			// canvas blur solution from https://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
-			var PIXEL_RATIO = (function () {
-			    var ctx = document.createElement("canvas").getContext("2d"),
-			        dpr = window.devicePixelRatio || 1,
-			        bsr = ctx.webkitBackingStorePixelRatio ||
-			              ctx.mozBackingStorePixelRatio ||
-			              ctx.msBackingStorePixelRatio ||
-			              ctx.oBackingStorePixelRatio ||
-			              ctx.backingStorePixelRatio || 1;
-
-			    return dpr / bsr;
-			})();
-
-			const ratio = PIXEL_RATIO
-			var can = this.canvas.get(0)
-			can.width = this.width * ratio;
-		    can.height = this.height * ratio;
-		    can.style.width = this.width + "px";
-		    can.style.height = this.height + "px";
-		    can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+		createHand() {
+			const xCenter = this.width / 2;
+	    	const yCenter = this.height / 2;
+			const length = this.baseRadius + (this.wheel_amt - 1 ) * this.stepRadius
+			this.hand = new Hand(xCenter, yCenter, length, 30)
 		}
+		
 
-		resize() {
-			this.context.canvas.width = this.wheelContainer.width() * 2;
-			this.context.canvas.height = this.context.canvas.width;
-			this.fixDpi()
-		};
-
-		draw() {
-			this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-			// the following should be configurable
-			const wheel_amt = 4
-			const xCenter = this.x + this.width / 2;
-	    	const yCenter = this. y + this.height / 2;
-			const baseRadius = 75
-			const stepRadius = 40
-
-			for (var i = 0; i < wheel_amt; i++) {
+		draw(sk) {
+			const xCenter = this.width / 2;
+	    	const yCenter = this.height / 2;
+	    	const baseRadius = 75
+			const stepRadius = 70
+			//draw wheels outside in
+			for (var i = this.wheel_amt - 1; i > -1 ; i--) {
 				let radius = baseRadius + stepRadius * i
-				let wheel = new Wheel(this.context, radius, xCenter, yCenter)
+				let wheel = new Wheel(radius, xCenter, yCenter)
 				this.wheels.push(wheel)
-				wheel.draw()
+				wheel.draw(sk)
 			}
-		}
-
-		start() {
-			this.resize();
-			this.draw();
-			this.hand.position(this.wheelContainer, this.canvas)
-			this.hand.animate()
+			this.hand.draw(sk)
 		}
 	}
-	interface = new Interface();
-	interface.start()
 
-	//$(window).on("resize", this.resize.bind(this));
+	let intfc = new Interface();
+	let sketch = (sk) => {    
+		sk.setup = () => {
+			sk.createCanvas(window.innerWidth,window.innerHeight);
+		}, 
+		sk.draw = () => {
+			intfc.draw(sk)
+		}
+	}
+	const P5 = new p5(sketch);
 });
 
 

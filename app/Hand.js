@@ -1,11 +1,16 @@
 const SECS_IN_MIN = 60
 const MILLISECS_IN_SEC = 1000
+const FRAMES_IN_LAP = 400
 
 define([], function() {
 	class Hand {
-		constructor(container, rpm) {
-			this.container = container
-			this.handElem = $("<div>", {id: "hand"}).appendTo(this.container)
+		constructor(x, y, length, rpm, frameRate) {
+			this.rpm = rpm
+			this.color = '#ff5ee6'
+			this.x = x
+			this.y = y
+			this.length = length
+			this.rotation = 0
 			this.rpm = rpm
 		}
 
@@ -33,6 +38,29 @@ define([], function() {
 
 				rps = this.rpm / SECS_IN_MIN
 			}, updateInterval);
+		}
+
+		//TODO: move this to common
+		toRadians (angle) {
+		  return angle * (Math.PI / 180);
+		}
+
+		draw(sk) {
+			const rps = (this.rpm / SECS_IN_MIN) 
+			const fps = sk.frameRate()
+			const step = rps * 360 / fps
+			if (step > 10) {
+				// invalid step, probably due to invalid fps
+				return
+			}
+			
+			sk.stroke(this.color)
+			sk.strokeWeight(2);
+  			sk.line(this.x, this.y, 
+  				this.x + Math.cos(this.toRadians(this.rotation)) * this.length, 
+  				this.y + Math.sin(this.toRadians(this.rotation)) * this.length);
+  			this.rotation = (this.rotation + step) % 360
+  			
 		}
 	}
 	return Hand
