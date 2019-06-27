@@ -1,6 +1,6 @@
 /*
 TODO: 
- - create hit indication on beats
+ - fix the idea of types on beats
 */
 
 
@@ -13,6 +13,7 @@ var count = 0
 require(['./Interface', './config'], function(Interface, config) {
 	let sketch = (sk) => { 
 		sk.setup = () => {
+			sk.frameRate(100)
 			sk.intfc = new Interface(sk);
 			sk.createCanvas(window.innerWidth,window.innerHeight);
 		}, 

@@ -20,22 +20,26 @@ define([], function () {
 					strokeColor: '#000000',
 					strokeWeight: 0
 				},
+			maxShockWaveRadiusMultiplyer: 1.5,
 			types: {
 				'type1': {
 					radius: 15,
+					swellRadius: 25,
 					sound: './assets/bass_sample.mp3',
-					color: '#32e5b2'
+					color: '#32e5b2',
 				},
 				'type2': {
 					radius: 20,
+					swellRadius: 30,
 					sound: './assets/clap_sample.mp3',
-					color: '#db0808'
+					color: '#db0808',
 				},
 				'type3': {
 					name: 'type3',
 					radius: 25,
+					swellRadius: 50,
 					sound: './assets/hh_sample.mp3',
-					color: '#4f4ad6'
+					color: '#4f4ad6',
 				}
 			}
 		}
