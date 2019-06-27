@@ -1,23 +1,24 @@
 
 //////Wheel
-define(['./Beat', 'jquery'], function(Beat) {
+define(['./Beat'], function(Beat) {
 	class Wheel {
-		constructor(sk, radius,x ,y) {
+		constructor(sk ,x ,y, radius, color, base, type) {
 			this.sk = sk
 			this.radius = radius
-			this.beatNum = 1
-			this.beats = this.createBeats(this.beatNum)
+			this.base = base
+			this.beatType = type
+			this.beats = this.createBeats(this.base, this.beatType)
 			this.x = x
 			this.y = y
-			this.strokeColor = '#000000'
-			this.fillColor = '#ffffff'
+			this.strokeColor = color
+			this.fillColor = color
 		}
 
-		createBeats(num) {
+		createBeats(num, type) {
 			let beats = []
 			for(var i = 0; i < num; i++) {
 				const radians = i * 2 * Math.PI / num
-				let beat = new Beat(this.sk, radians)
+				let beat = new Beat(this.sk, type, radians)
 				beats.push(beat)
 			}
 			return beats
@@ -29,7 +30,7 @@ define(['./Beat', 'jquery'], function(Beat) {
 			return {x: x, y: y}
 		}
 
-		draw(handRotation) {
+		draw() {
 			//draw wheel itself
 			this.sk.stroke(this.strokeColor)
 			this.sk.fill(this.fillColor)
@@ -39,11 +40,10 @@ define(['./Beat', 'jquery'], function(Beat) {
 			for (var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]
 				const {x, y} = this.getBeatCenter(beat)
-				beat.draw(x,y, handRotation)
+				beat.draw(x,y)
 			}
 		}
 
-		// TODO: move dist function to common
 		getIntersectObj(x, y) {
 			// if intersects a beat, returns the beat
 			for(var i = 0; i < this.beats.length; i++) {
@@ -54,19 +54,23 @@ define(['./Beat', 'jquery'], function(Beat) {
 			}
 			
 			// if intersects the wheel, returns the wheel
+			/*
 			if (this.sk.dist(x, y, this.x, this.y) <= this.radius) {
 				return this
-			}
+			}*/
 			return null
+
 		}
 
 		clickAction(x, _y) {
+			/*
 			if (x >= this.x) {
 				// right side of the circle adds a beat
-				this.beats = this.createBeats(++this.beatNum)
+				this.beats = this.createBeats(++this.base)
 			} else if (this.beatNum > 0) {
-				this.beats = this.createBeats(--this.beatNum)
+				this.beats = this.createBeats(--this.base)
 			}
+			*/
 		}
 
 	}
