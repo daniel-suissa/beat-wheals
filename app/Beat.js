@@ -1,47 +1,34 @@
-define(['./config'], function(config) {
-	class BeatType {
-		constructor(sk, name, src, color, radius, swellRadius=null, strokeColor=null, strokeWeight=null) {
-			this.name = name
-			if (src != '') {
-			    this.sound = sk.loadSound(src)
+define(['./BeatType'], function(beatTypes) {
+	class Beat {
+		constructor(sk, radians) {
+			this.sk = sk
+			this.radians = radians
+			this.availableTypes = beatTypes
+			this.typeIndex = -1
+			this.nextType()
+			this.enabled = true
+			this.isPlaying = false
+		}
+		
+		incrementTypeIndex() {
+			this.typeIndex = (this.typeIndex + 1) % this.availableTypes.length
+		}
+
+		nextType() {
+			this.incrementTypeIndex()
+			this.type = this.availableTypes[this.typeIndex]
+			if (this.type.src != '') {
+				this.sound = this.sk.loadSound(this.type.src)
+				this.setSoundOnEndedCallback(this)
 			} else {
 				this.sound = null
 			}
-			this.color = color
-			this.radius = radius
-			this.swellRadius = swellRadius
-			this.strokeColor = strokeColor
-			this.strokeWeight = strokeWeight
-
-		}
-	}
-
-	class Beat {
-		constructor(sk, type, radians) {
-			this.sk = sk
-			this.radians = radians
-			this.onType = new BeatType(sk, 
-								type, 
-								config.beatsConfig.types[type].sound, 
-								config.beatsConfig.types[type].color, 
-								config.beatsConfig.types[type].radius,
-								config.beatsConfig.types[type].swellRadius)
-			this.offType = new BeatType(sk, 
-				'nullBeat',
-				'',
-				config.beatsConfig.nullBeat.color,
-				config.beatsConfig.nullBeat.radius,
-				config.beatsConfig.nullBeat.strokeColor,
-				config.beatsConfig.nullBeat.strokeWeight
-				)
-			this.type = this.offType
 			this.enabled = true
 			this.isPlaying = false
-			this.setSoundOnEndedCallback(this)
 		}
-		
+
 		setSoundOnEndedCallback (that) {
-			this.onType.sound.onended( () => {
+			this.sound.onended( () => {
 				that.isPlaying = false
 			})
 		}
@@ -50,7 +37,9 @@ define(['./config'], function(config) {
 			this.x = x
 			this.y = y
 
-			this.drawShockWave(x, y)
+			if (this.isPlaying) {
+				this.swell(x, y)
+			}
 
 			this.sk.fill(this.type.color)
 			if (this.type.strokeColor) {
@@ -59,32 +48,30 @@ define(['./config'], function(config) {
 			} else {
 				this.sk.noStroke()
 			}
-			this.sk.circle(x,y,this.type.radius)
+			this.sk.circle(x,y, this.type.radius)
 			
 			
 		}
 
-		drawShockWave(x, y) {
-			if (this.isPlaying) {
-				const portion = this.onType.sound.currentTime() / 
-								this.onType.sound.duration()
-				
-				const radius = this.onType.radius + 
-								Math.sin(Math.PI * portion) * 
-								(this.onType.swellRadius - this.onType.radius)
+		swell(x, y) {
+			const portion = this.sound.currentTime() / 
+							this.sound.duration()
+			
+			const radius = this.type.radius + 
+							Math.sin(Math.PI * portion) * 
+							(this.type.swellRadius - this.type.radius)
 
-				this.sk.fill(this.onType.color)
-				this.sk.noStroke()
+			this.sk.fill(this.type.color)
+			this.sk.noStroke()
 
-				this.sk.circle(x,y,radius);
-			}
+			this.sk.circle(x,y,radius);
 		}
 
 		play() {
-			if (this.enabled && this.type == this.onType) {
+			if (this.enabled && this.sound) {
 				try {
 					this.isPlaying = true
-					this.onType.sound.play()
+					this.sound.play()
 				} catch (err) {
 					console.log(err)
 				}
@@ -96,12 +83,7 @@ define(['./config'], function(config) {
 			if (this.isPlaying) {
 				return
 			}
-
-			if (this.type == this.offType) {
-				this.type = this.onType
-			} else {
-				this.type = this.offType
-			}
+			this.nextType()
 			this.play()
 		}
 

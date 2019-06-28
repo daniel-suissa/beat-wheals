@@ -25,20 +25,20 @@ define([], function () {
 				'type1': {
 					radius: 15,
 					swellRadius: 25,
-					sound: './assets/bass_sample.mp3',
+					src: './assets/bass_sample.mp3',
 					color: '#32e5b2',
 				},
 				'type2': {
 					radius: 20,
 					swellRadius: 30,
-					sound: './assets/clap_sample.mp3',
+					src: './assets/clap_sample.mp3',
 					color: '#db0808',
 				},
 				'type3': {
 					name: 'type3',
 					radius: 25,
 					swellRadius: 50,
-					sound: './assets/hh_sample.mp3',
+					src: './assets/hh_sample.mp3',
 					color: '#4f4ad6',
 				}
 			}

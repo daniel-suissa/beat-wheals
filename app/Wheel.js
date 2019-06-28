@@ -2,23 +2,22 @@
 //////Wheel
 define(['./Beat'], function(Beat) {
 	class Wheel {
-		constructor(sk ,x ,y, radius, color, base, type) {
+		constructor(sk ,x ,y, radius, color, base) {
 			this.sk = sk
 			this.radius = radius
 			this.base = base
-			this.beatType = type
-			this.beats = this.createBeats(this.base, this.beatType)
+			this.beats = this.createBeats(this.base)
 			this.x = x
 			this.y = y
 			this.strokeColor = color
 			this.fillColor = color
 		}
 
-		createBeats(num, type) {
+		createBeats(num) {
 			let beats = []
 			for(var i = 0; i < num; i++) {
 				const radians = i * 2 * Math.PI / num
-				let beat = new Beat(this.sk, type, radians)
+				let beat = new Beat(this.sk, radians)
 				beats.push(beat)
 			}
 			return beats
@@ -63,14 +62,6 @@ define(['./Beat'], function(Beat) {
 		}
 
 		clickAction(x, _y) {
-			/*
-			if (x >= this.x) {
-				// right side of the circle adds a beat
-				this.beats = this.createBeats(++this.base)
-			} else if (this.beatNum > 0) {
-				this.beats = this.createBeats(--this.base)
-			}
-			*/
 		}
 
 	}
