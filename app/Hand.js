@@ -7,6 +7,7 @@ define(['./config'], function(config) {
 		constructor(sk, x, y, length, wheels) {
 			this.sk = sk
 			this.color = config.handConfig.color
+			this.baseWidth = config.handConfig.baseWidth
 			this.x = x
 			this.y = y
 			this.length = length
@@ -31,12 +32,19 @@ define(['./config'], function(config) {
 				// invalid step, probably due to invalid fps
 				return
 			}
-			
-			this.sk.stroke(this.color)
-			this.sk.strokeWeight(2);
-  			this.sk.line(this.x, this.y, 
+
+			const x1 = this.x - Math.cos(this.rotation) * this.baseWidth/2
+			const y1 = this.y - Math.sin(this.rotation) * this.baseWidth/2
+			const x2 = this.x + Math.cos(this.rotation) * this.baseWidth/2
+			const y2 = this.y + Math.sin(this.rotation) * this.baseWidth/2
+			const x3 = this.x + Math.sin(this.rotation) * this.length
+			const y3 = this.y - Math.cos(this.rotation) * this.length
+
+			this.sk.triangle(x1,y1,x2,y2,x3,y3)
+			this.sk.fill(this.color)
+  			/*this.sk.line(this.x, this.y, 
   				this.x + Math.sin(this.rotation) * this.length, 
-  				this.y - Math.cos(this.rotation) * this.length);
+  				this.y - Math.cos(this.rotation) * this.length);*/
   			this.rotation = (this.rotation + step) % (2 * Math.PI)
   			this.playIfNextBeatHit()
   			

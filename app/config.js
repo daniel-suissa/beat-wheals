@@ -12,6 +12,7 @@ define([], function () {
 		handConfig: {
 			defaultRpm: 30,
 			color: '#ff5ee6',
+			baseWidth: 7,
 		},
 		beatsConfig: {
 			nullBeat: {
