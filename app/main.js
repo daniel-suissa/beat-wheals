@@ -2,8 +2,6 @@
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 
-
-var count = 0
 require(['./Interface', './config'], function(Interface, config) {
 	let sketch = (sk) => { 
 
