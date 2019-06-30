@@ -34,7 +34,6 @@ define(['./Beat'], function(Beat) {
 			this.sk.stroke(this.strokeColor)
 			this.sk.fill(this.fillColor)
 			this.sk.circle(this.x, this.y, 2 * this.radius)
-
 			//draw beats
 			for (var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]

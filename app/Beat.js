@@ -69,11 +69,9 @@ define(['./BeatType'], function(beatTypes) {
 		swell(x, y) {
 			const portion = this.currSound.currentTime() / 
 							this.currSound.duration()
-
 			const radius = this.currType.radius + 
 							Math.sin(Math.PI * portion) * 
 							(this.currType.swellRadius - this.currType.radius)
-
 			this.sk.fill(this.currType.color)
 			this.sk.noStroke()
 
