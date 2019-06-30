@@ -48,6 +48,12 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			}
 		}
 
+		preload() {
+			this.wheels.forEach( (wheel) => {
+				wheel.preload()
+			})
+		}
+
 		draw() {
 			//draw wheels outside-in
 			for (var i = this.wheel_amt - 1; i > -1 ; i--) {

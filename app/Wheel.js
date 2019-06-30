@@ -47,7 +47,7 @@ define(['./Beat'], function(Beat) {
 			// if intersects a beat, returns the beat
 			for(var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]
-				if (this.sk.dist(x, y, beat.x, beat.y) <= beat.type.radius) {
+				if (this.sk.dist(x, y, beat.x, beat.y) <= beat.currType.radius) {
 					return beat
 				}
 			}
@@ -59,6 +59,12 @@ define(['./Beat'], function(Beat) {
 			}*/
 			return null
 
+		}
+
+		preload() {
+			this.beats.forEach( (beat) => {
+				beat.preload()
+			})
 		}
 
 		clickAction(x, _y) {

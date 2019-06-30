@@ -3,32 +3,48 @@ define(['./BeatType'], function(beatTypes) {
 		constructor(sk, radians) {
 			this.sk = sk
 			this.radians = radians
-			this.availableTypes = beatTypes
 			this.typeIndex = -1
+			this.currType = null
+			this.currSound = null
 			this.nextType()
 			this.enabled = true
 			this.isPlaying = false
+			this.sounds = null
+
 		}
 		
 		incrementTypeIndex() {
-			this.typeIndex = (this.typeIndex + 1) % this.availableTypes.length
+			this.typeIndex = (this.typeIndex + 1) % beatTypes.length
+		}
+
+		preload() {
+			//create an array of preloaded sounds. one for each type
+			//must be called before draw
+			this.sounds = []
+			for(var i = 0; i < beatTypes.length; i++) {
+				if (beatTypes[i].src != '') {
+					let sound = this.sk.loadSound(beatTypes[i].src)
+					this.sounds.push(sound)
+					this.setSoundOnEndedCallback(sound, this)
+				} else {
+					//element won't be used but we want to preserve the index parallel
+					this.sounds.push(null)
+				}
+			}
 		}
 
 		nextType() {
 			this.incrementTypeIndex()
-			this.type = this.availableTypes[this.typeIndex]
-			if (this.type.src != '') {
-				this.sound = this.sk.loadSound(this.type.src)
-				this.setSoundOnEndedCallback(this)
-			} else {
-				this.sound = null
-			}
+			this.currType = beatTypes[this.typeIndex]
 			this.enabled = true
 			this.isPlaying = false
+			if (this.sounds != null) {
+				this.currSound = this.sounds[this.typeIndex]
+			}
 		}
 
-		setSoundOnEndedCallback (that) {
-			this.sound.onended( () => {
+		setSoundOnEndedCallback (sound, that) {
+			sound.onended( () => {
 				that.isPlaying = false
 			})
 		}
@@ -41,37 +57,35 @@ define(['./BeatType'], function(beatTypes) {
 				this.swell(x, y)
 			}
 
-			this.sk.fill(this.type.color)
-			if (this.type.strokeColor) {
-				this.sk.stroke(this.type.strokeColor)
-				this.sk.strokeWeight(this.type.strokeWeight)
+			this.sk.fill(this.currType.color)
+			if (this.currType.strokeColor) {
+				this.sk.stroke(this.currType.strokeColor)
+				this.sk.strokeWeight(this.currType.strokeWeight)
 			} else {
 				this.sk.noStroke()
 			}
-			this.sk.circle(x,y, this.type.radius)
-			
-			
+			this.sk.circle(x,y, this.currType.radius)	
 		}
 
 		swell(x, y) {
-			const portion = this.sound.currentTime() / 
-							this.sound.duration()
+			const portion = this.currSound.currentTime() / 
+							this.currSound.duration()
 			
-			const radius = this.type.radius + 
+			const radius = this.currType.radius + 
 							Math.sin(Math.PI * portion) * 
-							(this.type.swellRadius - this.type.radius)
+							(this.currType.swellRadius - this.currType.radius)
 
-			this.sk.fill(this.type.color)
+			this.sk.fill(this.currType.color)
 			this.sk.noStroke()
 
 			this.sk.circle(x,y,radius);
 		}
 
 		play() {
-			if (this.enabled && this.sound) {
+			if (this.enabled && this.currSound) {
 				try {
 					this.isPlaying = true
-					this.sound.play()
+					this.currSound.play()
 				} catch (err) {
 					console.log(err)
 				}
