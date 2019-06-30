@@ -8,6 +8,8 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);			
 			this.createWheels();
 			this.createHand();
+
+			this.slider = null
 		}
 
 		createHand() {
@@ -51,7 +53,15 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			for (var i = this.wheels.length - 1; i > -1 ; i--) {
 				this.wheels[i].draw()
 			}
-			this.hand.draw()
+			this.hand.draw(this.slider.value())
+		}
+
+		setup() {
+			this.sk.colorMode(this.sk.HSB);
+		    this.slider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
+		    //this.slider.style('width', '80px');
+		    //this.slider.style('height', '20px');
+		    this.slider.position(100, config.interfaceHeight + 10);
 		}
 
 		getIntersectObj(x, y) {

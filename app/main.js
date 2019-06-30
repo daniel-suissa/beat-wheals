@@ -1,6 +1,8 @@
 
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
+import "p5/lib/addons/p5.dom";
+
 
 require(['./Interface', './config'], function(Interface, config) {
 	let sketch = (sk) => { 
@@ -10,9 +12,10 @@ require(['./Interface', './config'], function(Interface, config) {
 		sk.preload = () => {
 			intfc.preload()
 		}
-
+		var slider
 		sk.setup = () => {
-			sk.createCanvas(window.innerWidth,window.innerHeight);
+			sk.createCanvas(window.innerWidth, config.interfaceHeight);
+			intfc.setup()
 		}, 
 		sk.draw = () => {
 			sk.background(config.backgroundColor)

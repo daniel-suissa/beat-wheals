@@ -1,5 +1,7 @@
 define([], function () {
 	return {
+
+		interfaceHeight: window.innerHeight * 0.9,
 		backgroundColor: '#f4f4f4',
 		wheelsConfig: {
 			wheels: [

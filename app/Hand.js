@@ -11,11 +11,11 @@ define(['./config'], function(config) {
 			this.x = x
 			this.y = y
 			this.length = length
-			this.rpm = config.handConfig.defaultRpm
 
 			this.rotation = 0
 			this.wheels = wheels
 		}
+
 		position(canvas) {
 			// place hand in the middle of the canvas
 			const {top, left} = this.container.position(); 
@@ -24,8 +24,8 @@ define(['./config'], function(config) {
 				left: left + this.container.width() / 2})
 		}
 
-		draw() {
-			const rps = (this.rpm / SECS_IN_MIN) 
+		draw(rpm) {
+			const rps = (rpm / SECS_IN_MIN) 
 			const fps = this.sk.frameRate()
 			const step = rps * 2 * Math.PI / fps
 			if (step > 10) {
@@ -72,6 +72,7 @@ define(['./config'], function(config) {
 			} 
 			return false
 		}
+
 	}
 	return Hand
 })
