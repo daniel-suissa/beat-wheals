@@ -36,9 +36,7 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 				let wheel = new Wheel(this.sk, 
 										xCenter, 
 										yCenter, 
-										wheelConfig.radius,
-										wheelConfig.color, 
-										wheelConfig.base)
+										wheelConfig)
 				this.wheels.push(wheel)
 			}
 		}
@@ -64,7 +62,10 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 		setup() {
 			this.sk.colorMode(this.sk.HSB);
 		    this.rpmSlider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
-		    this.rpmSlider.position(100, config.interfaceHeight - 50);		    
+		    this.rpmSlider.position(100, config.interfaceHeight - 50);	
+		    this.wheels.forEach((wheel) => {
+		    	wheel.setup()
+		    })	    
 		}
 
 		getIntersectObj(x, y) {

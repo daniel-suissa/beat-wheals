@@ -2,11 +2,12 @@
 //////Wheel
 define(['./Beat'], function(Beat) {
 	class Wheel {
-		constructor(sk ,x ,y, radius, color, base) {
+		constructor(sk ,x ,y, {radius, color, defaultBase=null, defaultBeatTypes=null}) {
 			this.sk = sk
 			this.radius = radius
-			this.base = base
-			this.beats = this.createBeats(this.base)
+			this.beats = this.createBeats({
+								base: defaultBase,
+								types: defaultBeatTypes})
 			this.x = x
 			this.y = y
 			this.strokeColor = color
@@ -16,11 +17,29 @@ define(['./Beat'], function(Beat) {
 			this.dragOriginY = null
 		}
 
-		createBeats(num) {
+		createBeats({base=null, types=null}) {
+			if (types) {
+				return this.createPreconfiguredBeats(types)
+			} else {
+				return this.createDefaultBeats(base)
+			}
+		}
+
+		createDefaultBeats(num) {
 			let beats = []
 			for(var i = 0; i < num; i++) {
 				const radians = i * 2 * Math.PI / num
 				let beat = new Beat(this.sk, radians)
+				beats.push(beat)
+			}
+			return beats
+		}
+
+		createPreconfiguredBeats(types) {
+			let beats = []
+			for(var i = 0; i < types.length; i++) {
+				const radians = i * 2 * Math.PI / types.length
+				let beat = new Beat(this.sk, radians, types[i])
 				beats.push(beat)
 			}
 			return beats
@@ -66,6 +85,12 @@ define(['./Beat'], function(Beat) {
 		preload() {
 			this.beats.forEach( (beat) => {
 				beat.preload()
+			})
+		}
+
+		setup() {
+			this.beats.forEach( (beat) => {
+				beat.setup()
 			})
 		}
 

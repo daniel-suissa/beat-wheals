@@ -8,17 +8,18 @@ define([], function () {
 				{
 					radius: 100,
 					color: '#F39C6B',
-					base: 2,
+					defaultBase: 2,
+					defaultBeatTypes: ['type1', 'type3']
 				},
 				{
 					radius: 150,
 					color: '#FF3864',
-					base: 3,
+					defaultBase: 3,
 				},
 				{
 					radius: 200,
 					color: '#261447',
-					base: 4,
+					defaultBase: 4,
 				}
 			],
 		},

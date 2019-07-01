@@ -1,14 +1,18 @@
 define(['./BeatType'], function(beatTypes) {
 	class Beat {
-		constructor(sk, radians) {
+		constructor(sk, radians, typeName=null) {
 			this.sk = sk
 			this.radians = radians
+			this.defaultType = typeName
+			this.enabled = true
+			this.isPlaying = false
+
+			//initiazlied during setup
 			this.typeIndex = -1
 			this.currType = null
 			this.currSound = null
-			this.nextType()
-			this.enabled = true
-			this.isPlaying = false
+
+			//initialized during preload
 			this.sounds = null
 		}
 		
@@ -30,6 +34,21 @@ define(['./BeatType'], function(beatTypes) {
 					this.sounds.push(null)
 				}
 			}
+		}
+
+		setup() {
+			// actualize initial beat type
+			if(this.defaultType) {
+				this.typeIndex = beatTypes.findIndex((type) => {
+					return type.name == this.defaultType
+				})
+			} else {
+				this.typeIndex = 0
+			}
+			
+			this.currType = beatTypes[this.typeIndex]
+			this.currSound = null
+			this.currSound = this.sounds[this.typeIndex]
 		}
 
 		addRadians(rotation) {
@@ -99,8 +118,6 @@ define(['./BeatType'], function(beatTypes) {
 			}
 		}
 
-
-
 		mousePressed(_x, _y) {
 			if (this.isPlaying) {
 				return
@@ -112,6 +129,7 @@ define(['./BeatType'], function(beatTypes) {
 		mouseReleased(_x, _y) {}
 
 		mouseDragged(_x, _y) {}
+		
 		disable() {
 			this.enabled = false
 		}
