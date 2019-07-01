@@ -14,7 +14,7 @@ require(['./Interface', './config'], function(Interface, config) {
 		}
 		var slider
 		sk.setup = () => {
-			sk.createCanvas(window.innerWidth, config.interfaceHeight);
+			sk.createCanvas(config.interfaceWidth, config.interfaceHeight);
 			intfc.setup()
 		}, 
 		sk.draw = () => {

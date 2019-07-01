@@ -1,7 +1,7 @@
 define([], function () {
 	return {
-
-		interfaceHeight: window.innerHeight * 0.9,
+		interfaceHeight: window.innerHeight,
+		interfaceWidth: window.innerWidth,
 		backgroundColor: '#f4f4f4',
 		wheelsConfig: {
 			wheels: [
@@ -24,7 +24,7 @@ define([], function () {
 		},
 		handConfig: {
 			defaultRpm: 30,
-			color: '#ff5ee6',
+			color: '#ffffff',
 			baseWidth: 7
 		},
 		beatsConfig: {

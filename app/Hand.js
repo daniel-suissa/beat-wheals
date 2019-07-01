@@ -40,8 +40,9 @@ define(['./config'], function(config) {
 			const x3 = this.x + Math.sin(this.rotation) * this.length
 			const y3 = this.y - Math.cos(this.rotation) * this.length
 
-			this.sk.triangle(x1,y1,x2,y2,x3,y3)
 			this.sk.fill(this.color)
+			this.sk.triangle(x1,y1,x2,y2,x3,y3)
+			
   			/*this.sk.line(this.x, this.y, 
   				this.x + Math.sin(this.rotation) * this.length, 
   				this.y - Math.cos(this.rotation) * this.length);*/

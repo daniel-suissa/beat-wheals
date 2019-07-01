@@ -65,13 +65,14 @@ define(['./BeatType'], function(beatTypes) {
 				this.swell(x, y)
 			}
 
-			this.sk.fill(this.currType.color)
+			
 			if (this.currType.strokeColor) {
 				this.sk.stroke(this.currType.strokeColor)
 				this.sk.strokeWeight(this.currType.strokeWeight)
 			} else {
 				this.sk.noStroke()
 			}
+			this.sk.fill(this.currType.color)
 			this.sk.circle(x,y, this.currType.radius)	
 		}
 

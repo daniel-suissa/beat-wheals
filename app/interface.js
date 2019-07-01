@@ -9,7 +9,7 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.createWheels();
 			this.createHand();
 
-			this.slider = null
+			this.rpmSlider = null
 			this.lastPressedObj = null
 		}
 
@@ -54,15 +54,17 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			for (var i = this.wheels.length - 1; i > -1 ; i--) {
 				this.wheels[i].draw()
 			}
-			this.hand.draw(this.slider.value())
+			this.hand.draw(this.rpmSlider.value())
+			this.sk.fill(0);
+		    this.sk.textSize(18);
+		    this.sk.color('#000000')
+		    this.sk.text('RPM', 100, this.height - 20);
 		}
 
 		setup() {
 			this.sk.colorMode(this.sk.HSB);
-		    this.slider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
-		    //this.slider.style('width', '80px');
-		    //this.slider.style('height', '20px');
-		    this.slider.position(100, config.interfaceHeight + 10);
+		    this.rpmSlider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
+		    this.rpmSlider.position(100, config.interfaceHeight - 50);		    
 		}
 
 		getIntersectObj(x, y) {
