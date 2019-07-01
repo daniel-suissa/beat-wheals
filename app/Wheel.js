@@ -117,11 +117,11 @@ define(['./Beat'], function(Beat) {
 		isClockWiseMove(x,y) {
 			let v1 = [this.dragOriginX - this.x, this.dragOriginY - this.y]
 			let v2 = [x - this.x, y - this.y]
-				if(v1[0]*v2[1] < v1[1]*v2[0]){
-					return false
-				} else {
-					return true
-				}
+			if(v1[0]*v2[1] < v1[1]*v2[0]){
+				return false
+			} else {
+				return true
+			}
 			
 		}
 
