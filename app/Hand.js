@@ -66,8 +66,8 @@ define(['./config'], function(config) {
 		}
 
 		isBeatHit(beat) {
-			const distanceFromBeat = Math.abs(this.rotation - beat.radians) 
-			if (distanceFromBeat < 0.06) {
+			const deltaFromBeat = Math.abs(this.rotation - beat.radians) 
+			if (deltaFromBeat < 0.1) {
 				return true
 			} 
 			return false

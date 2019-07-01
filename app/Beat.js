@@ -32,6 +32,15 @@ define(['./BeatType'], function(beatTypes) {
 			}
 		}
 
+		addRadians(rotation) {
+			this.radians += rotation
+			if (this.radians > 2 * Math.PI) {
+				this.radians = 0
+			} else if (this.radians < 0) {
+				this.radians += 2 * Math.PI
+			}
+		}
+
 		nextType() {
 			this.incrementTypeIndex()
 			this.currType = beatTypes[this.typeIndex]

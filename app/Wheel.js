@@ -108,7 +108,7 @@ define(['./Beat'], function(Beat) {
 				rotation *= -1
 			}
 			this.beats.forEach( (beat) => {
-				beat.radians += rotation
+				beat.addRadians(rotation)
 			})
 			this.dragOriginX = x
 			this.dragOriginY = y
