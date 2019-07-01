@@ -56,16 +56,37 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.sk.fill(0);
 		    this.sk.textSize(18);
 		    this.sk.color('#000000')
-		    this.sk.text('RPM', 100, this.height - 20);
+		    this.sk.textFont('Playfair Display')
+		    this.sk.text('RPM', this.width / 2 + 100, this.height - 20);
+		    this.sk.text('Style', this.width / 2 - 100, this.height - 20);
 		}
 
 		setup() {
+			//slider
 			this.sk.colorMode(this.sk.HSB);
 		    this.rpmSlider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
-		    this.rpmSlider.position(100, config.interfaceHeight - 50);	
+		    this.rpmSlider.position(this.width / 2 + 100, config.interfaceHeight - 50);	
+		    
+		    //wheel setup
 		    this.wheels.forEach((wheel) => {
 		    	wheel.setup()
-		    })	    
+		    })	 
+
+		    //style drop menu 
+		    this.sk.textAlign(this.sk.CENTER);
+			this.sel = this.sk.createSelect();
+			this.sel.position(this.width / 2 - 100, config.interfaceHeight - 50);
+			this.sel.option('Empty');
+			this.sel.option('Standard 4/4');
+			this.sel.option('Wals');
+			this.sel.changed(this.getStyleChangedListener());   
+		}
+
+		getStyleChangedListener() {
+			let that = this
+			return () => {
+				console.log(that.sel.value());
+			}
 		}
 
 		getIntersectObj(x, y) {
