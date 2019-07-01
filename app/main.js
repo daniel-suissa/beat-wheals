@@ -29,6 +29,22 @@ require(['./Interface', './config'], function(Interface, config) {
 		sk.touchStarted = () => {
 			intfc.mousePressed()
 		}
+
+		sk.mouseReleased = () => {
+			intfc.mouseReleased()
+		}
+
+		sk.touchEnded = () => {
+			intfc.mouseReleased()
+		}
+
+		sk.mouseDragged = () => {
+			intfc.mouseDragged()
+		}
+
+		sk.touchMoved = () => {
+			intfc.mouseDragged()
+		}
 	}
 	const P5 = new p5(sketch);
 });

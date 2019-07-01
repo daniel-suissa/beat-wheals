@@ -10,6 +10,7 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.createHand();
 
 			this.slider = null
+			this.lastPressedObj = null
 		}
 
 		createHand() {
@@ -76,11 +77,25 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 
 
 		mousePressed() {
-			let obj = this.getIntersectObj(this.sk.mouseX, this.sk.mouseY)
+			//console.log(`pressed ${this.sk.mouseX} ${this.sk.mouseY}`)
+			this.lastPressedObj = this.getIntersectObj(this.sk.mouseX, this.sk.mouseY)
 
-			if (obj != null) {
-				obj.clickAction(this.sk.mouseX, this.sk.mouseY)
+			if (this.lastPressedObj != null) {
+				this.lastPressedObj.mousePressed(this.sk.mouseX, this.sk.mouseY)
 			}
+		}
+
+		mouseReleased() {
+			if(!this.lastPressedObj) return
+			//console.log(`released ${this.sk.mouseX} ${this.sk.mouseY}`)
+			this.lastPressedObj.mouseReleased(this.sk.mouseX, this.sk.mouseY)
+			this.lastPressedObj = null
+		}
+
+		mouseDragged() {
+			if(!this.lastPressedObj) return
+			//console.log(`dragged ${this.sk.mouseX} ${this.sk.mouseY}`)
+			this.lastPressedObj.mouseDragged(this.sk.mouseX, this.sk.mouseY)
 		}
 	}
 	return Interface

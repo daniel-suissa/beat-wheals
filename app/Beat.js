@@ -90,7 +90,8 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 
-		clickAction(_x, _y) {
+
+		mousePressed(_x, _y) {
 			if (this.isPlaying) {
 				return
 			}
@@ -98,6 +99,9 @@ define(['./BeatType'], function(beatTypes) {
 			this.play()
 		}
 
+		mouseReleased(_x, _y) {}
+
+		mouseDragged(_x, _y) {}
 		disable() {
 			this.enabled = false
 		}
