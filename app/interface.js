@@ -1,16 +1,16 @@
 
-define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
+define(['./Wheel', './Hand', './config/common'], function (Wheel, Hand, config) {
 	var Interface = class {
-		constructor(sk) {
+		constructor(sk, style) {
 			this.sk = sk
+			this.style = style
 			this.wheels = [];
 			this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);			
-			this.createWheels();
-			this.createHand();
-
 			this.rpmSlider = null
 			this.lastPressedObj = null
+			this.createWheels();
+			this.createHand();
 		}
 
 		createHand() {
@@ -30,9 +30,9 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.wheels = []
 			const xCenter = this.width / 2;
 	    	const yCenter = this.height / 2;
-			
-			for (var i = 0; i < config.wheelsConfig.wheels.length ; i++) {
-				const wheelConfig = config.wheelsConfig.wheels[i]
+			let wheelsConfig = config.getStyleConfig(this.style)
+			for (var i = 0; i < wheelsConfig.wheels.length ; i++) {
+				const wheelConfig = wheelsConfig.wheels[i]
 				let wheel = new Wheel(this.sk, 
 										xCenter, 
 										yCenter, 
@@ -66,7 +66,7 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.sk.colorMode(this.sk.HSB);
 		    this.rpmSlider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
 		    this.rpmSlider.position(this.width / 2 + 100, config.interfaceHeight - 50);	
-		    
+
 		    //wheel setup
 		    this.wheels.forEach((wheel) => {
 		    	wheel.setup()
@@ -77,15 +77,23 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 			this.sel = this.sk.createSelect();
 			this.sel.position(this.width / 2 - 100, config.interfaceHeight - 50);
 			this.sel.option('Empty');
-			this.sel.option('Standard 4/4');
-			this.sel.option('Wals');
+			this.sel.option('4 on the Floor');
+			this.sel.option('Classic Half Time');
+			this.sel.option('The Dance Beat');
+			this.sel.option('Son Clave');
+			this.sel.option('Tresillo');
 			this.sel.changed(this.getStyleChangedListener());   
+		}
+
+		reset() {
+			let choice = this.sel.value().toLowerCase().replace(/ /g, '_')
+			this.sk.reset(choice)
 		}
 
 		getStyleChangedListener() {
 			let that = this
 			return () => {
-				console.log(that.sel.value());
+				that.reset()
 			}
 		}
 
@@ -101,7 +109,6 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 
 
 		mousePressed() {
-			//console.log(`pressed ${this.sk.mouseX} ${this.sk.mouseY}`)
 			this.lastPressedObj = this.getIntersectObj(this.sk.mouseX, this.sk.mouseY)
 
 			if (this.lastPressedObj != null) {
@@ -111,14 +118,12 @@ define(['./Wheel', './Hand', './config'], function (Wheel, Hand, config) {
 
 		mouseReleased() {
 			if(!this.lastPressedObj) return
-			//console.log(`released ${this.sk.mouseX} ${this.sk.mouseY}`)
 			this.lastPressedObj.mouseReleased(this.sk.mouseX, this.sk.mouseY)
 			this.lastPressedObj = null
 		}
 
 		mouseDragged() {
 			if(!this.lastPressedObj) return
-			//console.log(`dragged ${this.sk.mouseX} ${this.sk.mouseY}`)
 			this.lastPressedObj.mouseDragged(this.sk.mouseX, this.sk.mouseY)
 		}
 	}

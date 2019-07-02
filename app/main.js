@@ -4,19 +4,30 @@ import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
 
 
-require(['./Interface', './config'], function(Interface, config) {
+require(['./Interface', './config/common'], function(Interface, config) {
 	let sketch = (sk) => { 
 
-		let intfc = new Interface(sk);
+		let intfc = new Interface(sk, config.defaultStyle);
 
 		sk.preload = () => {
 			intfc.preload()
 		}
-		var slider
+		
+		sk.reset = (style) => {
+			intfc = new Interface(sk, style)
+			intfc.preload()
+			intfc.setup()
+		}
+
+		sk.windowResized = () => {
+		  sk.resizeCanvas(config.interfaceWidth, config.interfaceHeight);
+		}
+
 		sk.setup = () => {
 			sk.createCanvas(config.interfaceWidth, config.interfaceHeight);
 			intfc.setup()
-		}, 
+		}
+
 		sk.draw = () => {
 			sk.background(config.backgroundColor)
 			intfc.draw(sk)

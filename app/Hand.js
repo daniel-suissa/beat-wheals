@@ -2,7 +2,7 @@ const SECS_IN_MIN = 60
 const MILLISECS_IN_SEC = 1000
 const FRAMES_IN_LAP = 400
 
-define(['./config'], function(config) {
+define(['./config/common'], function(config) {
 	class Hand {
 		constructor(sk, x, y, length, wheels) {
 			this.sk = sk

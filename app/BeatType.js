@@ -1,4 +1,4 @@
-define(['./config'], function(config) {
+define(['./config/common'], function(config) {
 	class BeatType {
 		constructor(name, src, color, radius, swellRadius=null, strokeColor=null, strokeWeight=null) {
 			this.name = name
