@@ -107,7 +107,6 @@ define(['./Wheel', './Hand', './config/common'], function (Wheel, Hand, config) 
 			return null
 		}
 
-
 		mousePressed() {
 			this.lastPressedObj = this.getIntersectObj(this.sk.mouseX, this.sk.mouseY)
 

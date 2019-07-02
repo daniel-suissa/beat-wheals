@@ -1,10 +1,10 @@
 
 //////Wheel
-define(['./Beat'], function(Beat) {
+define(['./Beat', './common'], function(Beat, common) {
 	class Wheel {
 		constructor(sk ,x ,y, {radius, color, defaultBase=null, defaultBeatTypes=null}) {
 			this.sk = sk
-			this.radius = radius
+			this.radius = common.getHeight(radius)
 			this.beats = this.createBeats({
 								base: defaultBase,
 								types: defaultBeatTypes})

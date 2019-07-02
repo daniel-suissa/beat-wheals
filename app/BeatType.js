@@ -1,11 +1,11 @@
-define(['./config/common'], function(config) {
+define(['./config/common', './common'], function(config, common) {
 	class BeatType {
 		constructor(name, src, color, radius, swellRadius=null, strokeColor=null, strokeWeight=null) {
 			this.name = name
 			this.src = src
 			this.color = color
-			this.radius = radius
-			this.swellRadius = swellRadius
+			this.radius = common.getHeight(radius)
+			this.swellRadius = common.getHeight(swellRadius)
 			this.strokeColor = strokeColor
 			this.strokeWeight = strokeWeight
 		}

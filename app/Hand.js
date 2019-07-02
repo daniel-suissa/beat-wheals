@@ -2,12 +2,12 @@ const SECS_IN_MIN = 60
 const MILLISECS_IN_SEC = 1000
 const FRAMES_IN_LAP = 400
 
-define(['./config/common'], function(config) {
+define(['./config/common', './common'], function(config, common) {
 	class Hand {
 		constructor(sk, x, y, length, wheels) {
 			this.sk = sk
 			this.color = config.handConfig.color
-			this.baseWidth = config.handConfig.baseWidth
+			this.baseWidth = common.getHeight(config.handConfig.baseWidth)
 			this.x = x
 			this.y = y
 			this.length = length
