@@ -9,11 +9,20 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.rpmSlider = null
 			this.lastPressedObj = null
 			this.createWheels(style);
-			this.createHand();
+		}
+
+		startOverlay() {
+			$('.overlay-start').addClass('is-open')
+			let that = this
+			$('.overlay-start').on('click', function() {
+		    $('.overlay-start').removeClass('is-open');
+		    $('.overlay').removeClass('is-open');
+		    that.createHand();
+		  });
 		}
 
 		createHand() {
-			// should only happen after createWheels
+			// should only be called after createWheels was
 			const xCenter = this.width / 2;
 	    	const yCenter = this.height / 2;
 			const length = this.wheels[this.wheels.length - 1].radius
@@ -51,7 +60,9 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			for (var i = this.wheels.length - 1; i > -1 ; i--) {
 				this.wheels[i].draw()
 			}
-			this.hand.draw(this.rpmSlider.value())
+			if(this.hand) {
+				this.hand.draw(this.rpmSlider.value())
+			}
 		}
 
 		setSlider() {
@@ -64,6 +75,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		}
 
 		setup() {
+			this.startOverlay();
 			this.setSlider()
 			this.setSelect() 
 
