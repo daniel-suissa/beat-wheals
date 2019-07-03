@@ -1,5 +1,5 @@
 
-define(['./Wheel', './Hand', './config/common'], function (Wheel, Hand, config) {
+define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Hand, config, common) {
 	var Interface = class {
 		constructor(sk, style) {
 			this.sk = sk
@@ -53,40 +53,66 @@ define(['./Wheel', './Hand', './config/common'], function (Wheel, Hand, config) 
 				this.wheels[i].draw()
 			}
 			this.hand.draw(this.rpmSlider.value())
-			this.sk.fill(0);
-		    this.sk.textSize(18);
-		    this.sk.color('#000000')
-		    this.sk.textFont('Playfair Display')
-		    this.sk.text('RPM', this.width / 2 + 100, this.height - 20);
-		    this.sk.text('Style', this.width / 2 - 100, this.height - 20);
+		    
+			this.drawSliderText()
+			this.drawStylesDropDownText()
 		}
 
-		setup() {
-			//slider
+		drawSliderText() {
+			if (!this.rpmSlider) return
+			this.sk.fill(0)
+			this.sk.textSize(30);
+		    this.sk.color('#000000')
+		    this.sk.textFont('Playfair Display')
+		    this.sk.textAlign(this.sk.LEFT);
+		    this.sk.text('RPM', this.rpmSlider.x, this.rpmSlider.y+40);
+		}
+
+		drawStylesDropDownText() {
+			if (!this.sel) return
+			this.sk.fill(0)
+			this.sk.textSize(30);
+		    this.sk.color('#000000')
+		    this.sk.textFont('Playfair Display')
+		    this.sk.textAlign(this.sk.LEFT);
+		    this.sk.text('Style', this.sel.x, this.sel.y+40);
+		}
+
+		createSlider() {
 			this.sk.colorMode(this.sk.HSB);
-		    this.rpmSlider = this.sk.createSlider(20, 100, config.handConfig.defaultRpm);
-		    this.rpmSlider.position(this.width / 2 + 100, config.interfaceHeight - 50);	
+		    this.rpmSlider = this.sk.createSlider(10, 70, config.handConfig.defaultRpm);
+		    this.rpmSlider.style('width', `${config.rpmSlider.width}`)
+		    this.rpmSlider.position(common.getWidth(config.rpmSlider.left), 
+		    						common.getHeight(1-config.rpmSlider.bottom));
+		}
 
-		    //wheel setup
-		    this.wheels.forEach((wheel) => {
-		    	wheel.setup()
-		    })	 
-
-		    //style drop menu 
-		    this.sk.textAlign(this.sk.CENTER);
+		createStyleDropDown() {
+			//style drop menu 
 			this.sel = this.sk.createSelect();
-			this.sel.position(this.width / 2 - 100, config.interfaceHeight - 50);
+			this.sel.position(common.getWidth(config.stylesDropdown.left), 
+							common.getHeight(1-config.stylesDropdown.bottom));
 			this.sel.option('Empty');
 			this.sel.option('4 on the Floor');
 			this.sel.option('Classic Half Time');
 			this.sel.option('The Dance Beat');
 			this.sel.option('Son Clave');
 			this.sel.option('Tresillo');
-			this.sel.changed(this.getStyleChangedListener());   
+			this.sel.changed(this.getStyleChangedListener()); 
+		}
+
+		setup() {
+			this.createSlider()
+			this.createStyleDropDown() 
+
+		    this.wheels.forEach((wheel) => {
+		    	wheel.setup()
+		    })	  
 		}
 
 		reset() {
 			let choice = this.sel.value().toLowerCase().replace(/ /g, '_')
+			this.rpmSlider.remove()
+			this.sel.remove()
 			this.sk.reset(choice)
 		}
 

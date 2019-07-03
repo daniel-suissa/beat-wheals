@@ -6,6 +6,17 @@ define(['./common', './empty', './4_on_the_floor'], function (common, empty, fou
 		interfaceHeight: window.innerHeight,
 		interfaceWidth: window.innerWidth,
 		backgroundColor: '#f4f4f4',
+		stylesDropdown: {
+			bottom: 0.1,
+			left: 0.3,
+			width: 0.1,
+
+		}, 
+		rpmSlider: {
+			bottom: 0.1,
+			left: 0.7,
+			width: 0.2
+		},
 		handConfig: {
 			defaultRpm: 30,
 			color: '#ffffff',
