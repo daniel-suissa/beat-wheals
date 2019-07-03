@@ -6,6 +6,7 @@ define(['./common', './empty', './4_on_the_floor'], function (common, empty, fou
 		interfaceHeight: window.innerHeight,
 		interfaceWidth: window.innerWidth,
 		backgroundColor: '#f4f4f4',
+		font: 'Playfair Display',
 		stylesDropdown: {
 			bottom: 0.1,
 			left: 0.4,

@@ -52,60 +52,20 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 				this.wheels[i].draw()
 			}
 			this.hand.draw(this.rpmSlider.value())
-		    
-			this.drawSliderText()
-			this.drawStylesDropDownText()
 		}
 
-		drawSliderText() {
-			if (!this.rpmSlider) return
-			this.sk.fill(0)
-			this.sk.textSize(30);
-		    this.sk.color('#000000')
-		    this.sk.textFont('Playfair Display')
-		    this.sk.textAlign(this.sk.CENTER);
-		    this.sk.text('RPM', 
-		    	this.rpmSlider.x + this.rpmSlider.size().width / 2, 
-		    	this.rpmSlider.y+50);
+		setSlider() {
+			this.rpmSlider = this.sk.select('#slider')
 		}
 
-		drawStylesDropDownText() {
-			if (!this.sel) return
-			this.sk.fill(0)
-			this.sk.textSize(30);
-		    this.sk.color('#000000')
-		    this.sk.textFont('Playfair Display')
-		    this.sk.textAlign(this.sk.LEFT);
-		    this.sk.text('Style', 
-		    	this.sel.x + this.sel.size().width / 2, 
-		    	this.sel.y+50);
-		}
-
-		createSlider() {
-			this.sk.colorMode(this.sk.HSB);
-		    this.rpmSlider = this.sk.createSlider(10, 70, config.handConfig.defaultRpm);
-		    this.rpmSlider.style('width', `${common.getWidth(config.rpmSlider.width)}`)
-		    this.rpmSlider.position(common.getWidth(config.rpmSlider.left), 
-		    						common.getHeight(1-config.rpmSlider.bottom));
-		}
-
-		createStyleDropDown() {
-			//style drop menu 
-			this.sel = this.sk.createSelect();
-			this.sel.position(common.getWidth(config.stylesDropdown.left), 
-							common.getHeight(1-config.stylesDropdown.bottom));
-			this.sel.option('Empty');
-			this.sel.option('4 on the Floor');
-			this.sel.option('Classic Half Time');
-			this.sel.option('The Dance Beat');
-			this.sel.option('Son Clave');
-			this.sel.option('Tresillo');
+		setSelect() {
+			this.sel = this.sk.select('#dropdown')
 			this.sel.changed(this.getStyleChangedListener()); 
 		}
 
 		setup() {
-			this.createSlider()
-			this.createStyleDropDown() 
+			this.setSlider()
+			this.setSelect() 
 
 		    this.wheels.forEach((wheel) => {
 		    	wheel.setup()
