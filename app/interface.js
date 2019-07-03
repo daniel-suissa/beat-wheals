@@ -3,13 +3,12 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 	var Interface = class {
 		constructor(sk, style) {
 			this.sk = sk
-			this.style = style
 			this.wheels = [];
 			this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);			
 			this.rpmSlider = null
 			this.lastPressedObj = null
-			this.createWheels();
+			this.createWheels(style);
 			this.createHand();
 		}
 
@@ -26,11 +25,11 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 				this.wheels)
 		}
 		
-		createWheels() {
-			this.wheels = []
+		createWheels(style) {
+			this.wheels.length = 0
 			const xCenter = this.width / 2;
 	    	const yCenter = this.height / 2;
-			let wheelsConfig = config.getStyleConfig(this.style)
+			let wheelsConfig = config.getStyleConfig(style)
 			for (var i = 0; i < wheelsConfig.wheels.length ; i++) {
 				const wheelConfig = wheelsConfig.wheels[i]
 				let wheel = new Wheel(this.sk, 
@@ -64,8 +63,10 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.sk.textSize(30);
 		    this.sk.color('#000000')
 		    this.sk.textFont('Playfair Display')
-		    this.sk.textAlign(this.sk.LEFT);
-		    this.sk.text('RPM', this.rpmSlider.x, this.rpmSlider.y+40);
+		    this.sk.textAlign(this.sk.CENTER);
+		    this.sk.text('RPM', 
+		    	this.rpmSlider.x + this.rpmSlider.size().width / 2, 
+		    	this.rpmSlider.y+50);
 		}
 
 		drawStylesDropDownText() {
@@ -75,13 +76,15 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		    this.sk.color('#000000')
 		    this.sk.textFont('Playfair Display')
 		    this.sk.textAlign(this.sk.LEFT);
-		    this.sk.text('Style', this.sel.x, this.sel.y+40);
+		    this.sk.text('Style', 
+		    	this.sel.x + this.sel.size().width / 2, 
+		    	this.sel.y+50);
 		}
 
 		createSlider() {
 			this.sk.colorMode(this.sk.HSB);
 		    this.rpmSlider = this.sk.createSlider(10, 70, config.handConfig.defaultRpm);
-		    this.rpmSlider.style('width', `${config.rpmSlider.width}`)
+		    this.rpmSlider.style('width', `${common.getWidth(config.rpmSlider.width)}`)
 		    this.rpmSlider.position(common.getWidth(config.rpmSlider.left), 
 		    						common.getHeight(1-config.rpmSlider.bottom));
 		}
@@ -109,17 +112,19 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		    })	  
 		}
 
-		reset() {
-			let choice = this.sel.value().toLowerCase().replace(/ /g, '_')
-			this.rpmSlider.remove()
-			this.sel.remove()
-			this.sk.reset(choice)
+		reset(style) {
+			this.createWheels(style)
+			this.preload()
+			this.wheels.forEach((wheel) => {
+		    	wheel.setup()
+		    })
 		}
 
 		getStyleChangedListener() {
 			let that = this
 			return () => {
-				that.reset()
+				let style = this.sel.value().toLowerCase().replace(/ /g, '_')
+				that.reset(style)
 			}
 		}
 

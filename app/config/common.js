@@ -8,13 +8,13 @@ define(['./common', './empty', './4_on_the_floor'], function (common, empty, fou
 		backgroundColor: '#f4f4f4',
 		stylesDropdown: {
 			bottom: 0.1,
-			left: 0.3,
+			left: 0.4,
 			width: 0.1,
 
 		}, 
 		rpmSlider: {
 			bottom: 0.1,
-			left: 0.7,
+			left: 0.6,
 			width: 0.2
 		},
 		handConfig: {
