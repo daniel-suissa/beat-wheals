@@ -9,15 +9,26 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.rpmSlider = null
 			this.lastPressedObj = null
 			this.createWheels(style);
+			this.createHand();
+			this.startOverlay();
 		}
 
 		startOverlay() {
-			$('.overlay-start').addClass('is-open')
+			this.hand.stop()
+			$('.overlay-button').off()
+			$('.overlay-button').addClass('is-open')
+			$('.overlay-button').text("Loading...")
+			$('.overlay').addClass('is-open')
+
+		}
+
+		buttonStart() {
+			$('.overlay-button').text("Start")
 			let that = this
-			$('.overlay-start').on('click', function() {
-		    $('.overlay-start').removeClass('is-open');
+			$('.overlay-button').on('click', function() {
+		    $('.overlay-button').removeClass('is-open');
 		    $('.overlay').removeClass('is-open');
-		    that.createHand();
+		    that.hand.start()
 		  });
 		}
 
@@ -74,22 +85,27 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.sel.changed(this.getStyleChangedListener()); 
 		}
 
-		setup() {
-			this.startOverlay();
+		setup() {	
 			this.setSlider()
 			this.setSelect() 
 
 		    this.wheels.forEach((wheel) => {
 		    	wheel.setup()
-		    })	  
+		    })
+		    this.buttonStart()	
 		}
 
 		reset(style) {
+			this.startOverlay()
 			this.createWheels(style)
 			this.preload()
+			//this.sk.noLoop()
 			this.wheels.forEach((wheel) => {
 		    	wheel.setup()
 		    })
+		    setTimeout(() => {
+		    	this.buttonStart()
+				}, 4000)
 		}
 
 		getStyleChangedListener() {

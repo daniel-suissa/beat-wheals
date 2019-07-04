@@ -191,7 +191,7 @@ input[type=range]:focus::-ms-fill-upper {
   visibility: visible;
 }
 
-.overlay-start {
+.overlay-button {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -209,11 +209,11 @@ input[type=range]:focus::-ms-fill-upper {
   transition: .2s ease-in-out;
   transform: translate(-50%, -50%);
 }
-.overlay-start.is-open {
+.overlay-button.is-open {
   opacity: 1;
   visibility: visible;
 }
-.overlay-start:hover {
+.overlay-button:hover {
   background: transparent;
   color: #fff;
 }

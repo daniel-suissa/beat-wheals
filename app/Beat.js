@@ -21,6 +21,10 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 		preload() {
+			this.loadSounds()
+		}
+
+		loadSounds() {
 			//create an array of preloaded sounds. one for each type
 			//must be called before draw
 			this.sounds = []

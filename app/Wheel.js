@@ -52,10 +52,18 @@ define(['./Beat', './common'], function(Beat, common) {
 		}
 
 		draw() {
+			//draw white gap
+			this.sk.noStroke()
+			this.sk.fill('#ffffff')
+			this.sk.circle(this.x, this.y, 2 * this.radius+10)
+
 			//draw wheel itself
-			this.sk.stroke(this.strokeColor)
-			this.sk.fill(this.fillColor)
-			this.sk.circle(this.x, this.y, 2 * this.radius)
+			let fillColor = this.sk.color(this.fillColor)
+			fillColor.setAlpha(70)
+			this.sk.fill(fillColor)
+			this.sk.circle(this.x, this.y, 2 * this.radius-10)
+
+			
 			//draw beats
 			for (var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]

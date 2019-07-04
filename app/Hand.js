@@ -11,9 +11,8 @@ define(['./config/common', './common'], function(config, common) {
 			this.x = x
 			this.y = y
 			this.length = length
-
-			this.rotation = 0
 			this.wheels = wheels
+			this.stop()
 		}
 
 		position(canvas) {
@@ -24,7 +23,7 @@ define(['./config/common', './common'], function(config, common) {
 				left: left + this.container.width() / 2})
 		}
 
-		draw(rpm) {
+		update(rpm) {
 			const rps = (rpm / SECS_IN_MIN) 
 			const fps = this.sk.frameRate()
 			const step = rps * 2 * Math.PI / fps
@@ -72,6 +71,19 @@ define(['./config/common', './common'], function(config, common) {
 				return true
 			} 
 			return false
+		}
+
+		backToZero() {
+			this.rotation = 0
+		}
+
+		stop() {
+			this.draw = () => {}
+			
+		}
+		start() {
+			this.rotation = 0.98 * 2 * Math.PI
+			this.draw = this.update
 		}
 
 	}
