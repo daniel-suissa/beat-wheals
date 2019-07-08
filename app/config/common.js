@@ -27,8 +27,8 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 		beatsConfig: {
 			nullBeat: {
 					radius: 0.025,
-					color: '#65737e',
-					strokeColor: '#65737e',
+					color: '#5D5F8D',
+					strokeColor: '#5D5F8D',
 					strokeWeight: 0
 				},
 			types: {
