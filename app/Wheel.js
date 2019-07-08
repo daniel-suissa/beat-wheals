@@ -55,13 +55,13 @@ define(['./Beat', './common'], function(Beat, common) {
 			//draw white gap
 			this.sk.noStroke()
 			this.sk.fill('#ffffff')
-			this.sk.circle(this.x, this.y, 2 * this.radius+10)
+			this.sk.circle(this.x, this.y, 2 * this.radius)
 
 			//draw wheel itself
 			let fillColor = this.sk.color(this.fillColor)
-			fillColor.setAlpha(70)
+			//fillColor.setAlpha(70)
 			this.sk.fill(fillColor)
-			this.sk.circle(this.x, this.y, 2 * this.radius-10)
+			this.sk.circle(this.x, this.y, 2 * this.radius)
 
 			
 			//draw beats

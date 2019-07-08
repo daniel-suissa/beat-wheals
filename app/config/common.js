@@ -6,7 +6,7 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 			'The Dance Beat', 'Son Clave', 'Tresillo'],
 		interfaceHeight: window.innerHeight,
 		interfaceWidth: window.innerWidth,
-		backgroundColor: '#f4f4f4',
+		backgroundColor: '#ffffff',
 		font: 'Playfair Display',
 		stylesDropdown: {
 			bottom: 0.1,
