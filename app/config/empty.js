@@ -3,17 +3,17 @@ define([], function () {
 		wheels: [
 			{
 				radius: 0.1,
-				color: '#FE6100',
+				color: '#DDDDDD',
 				defaultBase: 4,
 			},
 			{
 				radius: 0.18,
-				color: '#4399DE',
+				color: '#FD3C71',
 				defaultBase: 3,
 			},
 			{
 				radius: 0.25,
-				color: '#22D412',
+				color: '#0080FD',
 				defaultBase: 4,
 			},
 
