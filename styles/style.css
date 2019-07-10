@@ -3,10 +3,12 @@ html, body {
 }
 
 canvas {
-    border: 1px dotted green;
     display: inline;
     height: 100%;
     width: 100%;
+}
+#canvas-container {
+  height: 80%;
 }
 
 .outer-container {
@@ -69,111 +71,6 @@ select.sel-light:active {
 }
 
 
-#slider-container {
-	top: 17%;
-}
-
-#dropdown-container {
-	top: 90%;
-}
-
-input[type=range] {
-  width: 300px;
-}
-/*###################################*/
-/*###########Responsive Range########*/
-/*###################################*/
-/*##############Core Style###########*/
-
-input[type=range] {
-  -webkit-appearance: none;
-  width: 50%;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-}
-
-input[type=range]:focus {
-  outline: none;
-}
-
-input[type=range]::-ms-track {
-  width: 100%;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-/*#############Thumb##############*/
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 36px;
-  width: 36px;
-  background: #555;
-  cursor: pointer;
-  margin-top: -12px;
-}
-
-input[type=range]::-moz-range-thumb {
-  height: 36px;
-  width: 36px;
-  background: #555;
-  cursor: pointer;
-}
-
-input[type=range]::-ms-thumb {
-  height: 36px;
-  width: 36px;
-  background: #555;
-  cursor: pointer;
-}
-/*#############Track##############*/
-
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 12px;
-  cursor: pointer;
-  background: #ccc;
-}
-
-input[type=range]:active::-webkit-slider-runnable-track {
-  background: #d6d6d6;
-}
-
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 12px;
-  cursor: pointer;
-  background: #ccc;
-}
-
-input[type=range]::-ms-track {
-  width: 100%;
-  height: 12px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-
-input[type=range]::-ms-fill-lower {
-  background: #ccc;
-}
-
-input[type=range]:focus::-ms-fill-lower {
-  background: #ddd;
-}
-
-input[type=range]::-ms-fill-upper {
-  background: #ccc;
-}
-
-input[type=range]:focus::-ms-fill-upper {
-  background: #ddd;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -216,4 +113,65 @@ input[type=range]:focus::-ms-fill-upper {
 .overlay-button:hover {
   background: transparent;
   color: #fff;
+}
+
+#drum-icon {
+  max-width:100%;
+  max-height:100%;
+}
+
+.styles-menu {
+  margin: auto;
+  margin-top: 35vh;
+  top: 20%;
+  width: 50vw;
+  height: 30vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu-button {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: blue;
+  font-size: 20pt;
+}
+
+.close-button {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  box-sizing: border-box;
+  line-height: 50px;
+  display: inline-block;
+
+  &:before, &:after {
+    @width: 50px;
+    @height: 10px;
+    transform: rotate(-45deg);
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -5px;
+    margin-left: -25px;
+    display: block;
+    height: 50px;
+    width: 10px;
+    background-color: #fff;
+    transition: all 0.2s ease-out;
+  }
+
+  &:after {
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+
+    &:before, &:after {
+      transform: rotate(0deg);
+    }
+  }
 }

@@ -2,10 +2,9 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 	function (common, empty, four_on_the_floor, tresillo, son_clave) {
 	let config = {
 		defaultStyle: 'empty',
-		styleOptions: ['Empty', '4 on the Floor', 'Classic Half Time',
-			'The Dance Beat', 'Son Clave', 'Tresillo'],
-		interfaceHeight: window.innerHeight,
-		interfaceWidth: window.innerWidth,
+		styleOptions: ['Empty', '4 on the Floor', 'Son Clave', 'Tresillo'],
+		//'4 on the Floor', 'Classic Half Time',
+		//	'The Dance Beat', ],
 		backgroundColor: '#ffffff',
 		font: 'Playfair Display',
 		stylesDropdown: {

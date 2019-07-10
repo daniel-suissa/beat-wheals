@@ -4,7 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname,'app'),
-    entry: './main.js',
+    entry: { main: './main.js', imports: './imports.js'},
     output: {
 		filename: "./[name].js",
 		publicPath: './dist/',
@@ -21,7 +21,11 @@ module.exports = {
     		{
 			    test: /\.(ogg|mp3|wav|mpe?g)$/i,
 			    use: 'file-loader'
-			}
+			},
+			{
+                 test:/\.(s*)css$/,
+                 use:['style-loader','css-loader', 'sass-loader']
+            }
     	]
     }
 };

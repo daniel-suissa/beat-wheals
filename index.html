@@ -2,16 +2,13 @@
 <html>
 <head>
 	<title></title>
-	<link type="text/css" href="style.css" rel="stylesheet"></link>
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
 </head>
 <body>
+	<div id="canvas-container"></div>
 	<div class='overlay is-open'></div>
 	<button class="overlay-button">Start</button>
-	<div id='slider-container' class='outer-container'>
-		<input id="slider" class= 'inner-centered' type="range" min="10" max="70" value='41'>
-	</div>
-	<div id='dropdown-container' class='outer-container'>
+	<!--<div id='dropdown-container' class='outer-container'>
 		<div class='dropdown'>
 			<select id="dropdown" class='inner-centered sel-light'>
 			<option value="Empty">Clear</option>
@@ -19,7 +16,19 @@
 			<option value="Son Clave">Son Clave</option><option value="Tresillo">Tresillo</option>
 		</select>
 		</div>
+	</div>-->
+	<div class="controls">
+		<div id="styles-button">
+			<img id='drum-icon' src="assets/icons/african-drum-svgrepo-com.svg" alt="African Drum">
+		</div>
+		<div class="slider-container">
+		  <div class="range-slider">
+		    <span id="rs-bullet" class="rs-label">20</span>
+		    <input id="rs-range-line" class="rs-range" type="range" value="20" min="0" max="100">
+		  </div>
+		</div>
 	</div>
 </body>
+<script type="text/javascript" src="dist/imports.js"></script>
 <script type="text/javascript" src="dist/main.js"></script>
 </html>

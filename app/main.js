@@ -4,6 +4,7 @@ import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
 
 
+
 require(['./Interface', './config/common'], function(Interface, config) {
 	let sketch = (sk) => { 
 
@@ -20,11 +21,16 @@ require(['./Interface', './config/common'], function(Interface, config) {
 		}
 
 		sk.windowResized = () => {
-		  sk.resizeCanvas(config.interfaceWidth, config.interfaceHeight);
+		  sk.resizeCanvas(
+				$('#canvas-container').width(), 
+				$('#canvas-container').height());
 		}
 
 		sk.setup = () => {
-			sk.createCanvas(config.interfaceWidth, config.interfaceHeight);
+			var canvas = sk.createCanvas(
+				$('#canvas-container').width(), 
+				$('#canvas-container').height());
+			canvas.parent('canvas-container');
 			intfc.setup()
 		}
 

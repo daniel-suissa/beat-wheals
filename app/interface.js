@@ -77,12 +77,44 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		}
 
 		setSlider() {
-			this.rpmSlider = this.sk.select('#slider')
+			this.rpmSlider = this.sk.select('#rs-range-line')
 		}
 
 		setSelect() {
 			this.sel = this.sk.select('#dropdown')
-			this.sel.changed(this.getStyleChangedListener()); 
+			//this.sel.changed(this.getStyleChangedListener()); 
+			$('#styles-button').on('click', () => {
+				this.hand.stop()
+				this.openStylesMenu()
+			})
+		}
+
+		openStylesMenu() {
+			$('.overlay').addClass('is-open')
+			let menu = document.createElement('div')
+			$(menu).addClass('styles-menu')
+			$('.overlay').append(menu)
+			config.styleOptions.forEach((opt) => {
+				let elem = document.createElement('button')
+				elem.innerHTML = opt;
+				let formattedOpt = opt.toLowerCase().replace(/ /g, '_')
+				elem.setAttribute("id", "button-" + formattedOpt);
+				$(elem).addClass('menu-button')
+				let that = this
+				$(elem).on('click', () => {
+					$('.overlay').removeClass('is-open')
+					menu.remove()
+					that.reset(formattedOpt)
+				})
+				$(menu).append(elem)
+			})
+			let exitButton = $('<a href="#" class="close-button"></a>')
+			exitButton.on('click', () => {
+				menu.remove()
+				$('.overlay').removeClass('is-open')
+			})
+
+			$(menu).append(exitButton)
 		}
 
 		setup() {	
