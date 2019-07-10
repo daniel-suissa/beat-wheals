@@ -6,8 +6,11 @@ showSliderValue()
 rangeSlider.addEventListener("input", showSliderValue, false);
 
 function showSliderValue() {
-  let sliderWidth = $('#rs-range-line').width()
+  let sliderWidth = $('#rs-range-line').width() 
+  let bulletWidth = $('#rs-bullet').width()
   rangeBullet.innerHTML = rangeSlider.value;
-  var bulletPosition = (rangeSlider.value /rangeSlider.max);
-  rangeBullet.style.left = (bulletPosition * sliderWidth * 0.95) + "px";
+  //bulletPosition is scaled down because the actualy slider line is shorter than it's width
+  var bulletPosition = (rangeSlider.value / rangeSlider.max) * 0.96;
+  // the 11 comes from half the tracker's width
+  rangeBullet.style.left = ( bulletPosition * sliderWidth) - bulletWidth/2 + 11 + "px";
 }

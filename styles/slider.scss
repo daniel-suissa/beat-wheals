@@ -1,13 +1,5 @@
 // created by Marine Piette: https://codepen.io/mayuMPH/pen/ZjxGEY
 
-#styles-button {
-    position: relative;
-    display: inline-block;
-    margin-top: 6%;
-    margin-left: 6%;
-    width: 6%
-}
-
 .range-slider {
     width: 100%;
     margin: auto;
@@ -17,10 +9,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
+    position: absolute;
     display: inline-block;
-    width: 50%;
-    margin-left: 12%;
+    width: 50vw;
+    left: 25vw;
 }
 
 .rs-range {
@@ -82,17 +74,13 @@
     position: relative;
     transform-origin: center center;
     display: block;
-    width: 98px;
-    height: 98px;
     background: transparent;
     border-radius: 50%;
     line-height: 30px;
     text-align: center;
     font-weight: bold;
-    padding-top: 22px;
     box-sizing: border-box;
     border: 2px solid #000000;
-    margin-left: -35px;
     left: attr(value);
     color: #000000;
     font-family: 'playfair-display';
@@ -112,3 +100,22 @@
 #rs-bullet {
     bottom: 13px;
 } 
+
+@media (min-width: 320px) {
+  .rs-label {
+    width: 98px;
+    height: 98px;
+    padding-top: 22px;
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 1025px)  {
+  .rs-label {
+    width: 80px;
+    height: 80px;
+    padding-top: 15px;
+    font-size: 20px;
+  }
+}
+
