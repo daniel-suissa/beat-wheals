@@ -85,6 +85,9 @@ define(['./config/common', './common'], function(config, common) {
 			this.rotation = 0.98 * 2 * Math.PI
 			this.draw = this.update
 		}
+		continue() {
+			this.draw = this.update
+		}
 
 	}
 	return Hand

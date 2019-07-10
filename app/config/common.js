@@ -5,6 +5,7 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 		styleOptions: ['Empty', '4 on the Floor', 'Son Clave', 'Tresillo'],
 		//'4 on the Floor', 'Classic Half Time',
 		//	'The Dance Beat', ],
+		styleButtonColors: ['#F9C909', '#F35844', '#189AA8', '#311010', '#69B8D2'],
 		backgroundColor: '#ffffff',
 		font: 'Playfair Display',
 		stylesDropdown: {

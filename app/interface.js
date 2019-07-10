@@ -8,9 +8,11 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);			
 			this.rpmSlider = null
 			this.lastPressedObj = null
+
 			this.createWheels(style);
 			this.createHand();
 			this.startOverlay();
+			this.draw = this.update
 		}
 
 		startOverlay() {
@@ -29,6 +31,8 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		    $('.overlay-button').removeClass('is-open');
 		    $('.overlay').removeClass('is-open');
 		    that.hand.start()
+		    that.draw = that.update
+		    that.sk.loop()
 		  });
 		}
 
@@ -49,7 +53,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.wheels.length = 0
 			const xCenter = this.width / 2;
 	    	const yCenter = this.height / 2;
-			let wheelsConfig = config.getStyleConfig(style)
+	    	let wheelsConfig = config.getStyleConfig(style)
 			for (var i = 0; i < wheelsConfig.wheels.length ; i++) {
 				const wheelConfig = wheelsConfig.wheels[i]
 				let wheel = new Wheel(this.sk, 
@@ -66,7 +70,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			})
 		}
 
-		draw() {
+		update() {
 			//draw wheels outside-in
 			for (var i = this.wheels.length - 1; i > -1 ; i--) {
 				this.wheels[i].draw()
@@ -80,11 +84,18 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.rpmSlider = this.sk.select('#rs-range-line')
 		}
 
+		clear() {
+			// hacky hacky becase clear() doesn't work properly
+			this.sk.background(config.backgroundColor)
+		}
+
 		setSelect() {
 			this.sel = this.sk.select('#dropdown')
 			//this.sel.changed(this.getStyleChangedListener()); 
 			$('#styles-button').on('click', () => {
 				this.hand.stop()
+				this.draw = this.clear
+				this.sk.noLoop()
 				this.openStylesMenu()
 			})
 		}
@@ -94,12 +105,15 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			let menu = document.createElement('div')
 			$(menu).addClass('styles-menu')
 			$('.overlay').append(menu)
+			var i = 0
 			config.styleOptions.forEach((opt) => {
 				let elem = document.createElement('button')
 				elem.innerHTML = opt;
 				let formattedOpt = opt.toLowerCase().replace(/ /g, '_')
 				elem.setAttribute("id", "button-" + formattedOpt);
 				$(elem).addClass('menu-button')
+				$(elem).css("background-color", config.styleButtonColors[i++])
+				$(elem).css("height", + 70 / config.styleOptions.length +  'vh')
 				let that = this
 				$(elem).on('click', () => {
 					$('.overlay').removeClass('is-open')
@@ -112,6 +126,9 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			exitButton.on('click', () => {
 				menu.remove()
 				$('.overlay').removeClass('is-open')
+				this.hand.continue()
+				this.draw = this.update
+				this.sk.loop()
 			})
 
 			$(menu).append(exitButton)
@@ -128,6 +145,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		}
 
 		reset(style) {
+			console.log(`resetting to ${style}`)
 			this.startOverlay()
 			this.createWheels(style)
 			this.preload()
