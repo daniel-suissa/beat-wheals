@@ -3,20 +3,22 @@ define([], function () {
 		wheels: [
 			{
 				radius: 0.1,
-				color: '#F39C6B',
-				defaultBeatTypes: ['djembe_bass', 'djembe_tone', 'djembe_tone',
-								'djembe_bass', 'djembe_tone','djembe_tone',
-								'djembe_slap', 'djembe_tone']
+				color: '#F9C909',
+				defaultBeatTypes: ['djembe_bass', 'nullBeat', 'nullBeat',
+								'djembe_bass', 'nullBeat','nullBeat',
+								'nullBeat', 'nullBeat']
 			},
 			{
 				radius: 0.18,
-				color: '#FF3864',
-				defaultBase: 8
+				color: '#F35844',
+				defaultBeatTypes: ['nullBeat', 'djembe_tone', 'djembe_tone',
+								'nullBeat', 'djembe_tone','djembe_tone',
+								'djembe_slap', 'djembe_tone']
 			},
 			{
 				radius: 0.25,
-				color: '#261447',
-				defaultBase: 3,
+				color: '#189AA8',
+				defaultBase: 16,
 			}
 		],
 	}
