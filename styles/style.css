@@ -90,15 +90,18 @@ select.sel-light:active {
 
 .overlay-button {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  bottom: 6vh;
+  left: 50vw;
+  height: 4vh;
+  width: 40vw;
+  line-height: 0vh;
   z-index: 10;
   padding: 1em 2.5em;
   background: #fff;
   border: 1px solid #fff;
-  border-radius: 4px;
+  border-radius: 3vh;
   color: #222;
-  font-size: 16px;
+  font-size: 2vh;
   text-align: center;
   cursor: pointer;
   opacity: 0;
