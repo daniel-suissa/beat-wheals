@@ -6,6 +6,7 @@
 }
 
 .slider-container {
+    font-family: 'Playfair Display', serif;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -83,7 +84,6 @@
     border: 2px solid #000000;
     left: attr(value);
     color: #000000;
-    font-family: 'playfair-display';
     font-style: normal;
     font-weight: normal;
     line-height: normal;
@@ -105,8 +105,8 @@
   .rs-label {
     width: 98px;
     height: 98px;
-    padding-top: 22px;
-    font-size: 36px;
+    padding-top: 4px;
+    font-size: 40px;
   }
 }
 
@@ -114,7 +114,7 @@
   .rs-label {
     width: 80px;
     height: 80px;
-    padding-top: 15px;
+    padding-top: 12px;
     font-size: 20px;
   }
 }

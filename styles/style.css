@@ -38,7 +38,7 @@ select {
   width: 30%;
   min-width: 200px;
   outline: none;
-  font-family: sans-serif;
+  font-family: 'Playfair Display', serif;
   font-size: 20pt;
   font-weight: 400;
   text-align: center;
@@ -103,6 +103,7 @@ select.sel-light:active {
   color: #222;
   font-size: 2vh;
   text-align: center;
+  font-family: 'Playfair Display', serif;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
@@ -151,8 +152,6 @@ select.sel-light:active {
   }
 }
 
-
-
 .styles-menu {
   margin: auto;
   margin-top: 35vh;
@@ -170,6 +169,7 @@ select.sel-light:active {
   width: 100%;
   background-color: blue;
   font-size: 20pt;
+  font-family: 'Playfair Display', serif;
 }
 
 .close-button {
