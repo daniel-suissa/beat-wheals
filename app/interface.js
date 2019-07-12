@@ -1,5 +1,5 @@
 
-define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Hand, config, common) {
+define(['./Wheel', './Hand', './config/common', './common', './soundManager'], function (Wheel, Hand, config, common, SoundManager) {
 	var Interface = class {
 		constructor(sk, style) {
 			this.sk = sk
@@ -11,6 +11,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.createWheels(style);
 			this.createHand();
 			this.draw = this.update
+			this.soundManager = new SoundManager(sk)
 		}
 
 		showOverlay() {
@@ -60,17 +61,20 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 				let wheel = new Wheel(this.sk, 
 										xCenter, 
 										yCenter, 
-										wheelConfig)
+										wheelConfig,
+										this.soundManager)
 				this.wheels.push(wheel)
 			}
 		}
 
 		preload() {
+			this.soundManager.preload()
 			this.showOverlay();
 			this.showLoadingButton();
 			this.wheels.forEach( (wheel) => {
 				wheel.preload()
 			})
+			console.log(this.soundManager)
 		}
 
 		update() {
@@ -182,7 +186,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		setup() {	
 			this.setSlider()
 			this.setSelect() 
-
+			this.soundManager.setup()
 		    this.wheels.forEach((wheel) => {
 		    	wheel.setup()
 		    })

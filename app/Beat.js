@@ -1,6 +1,6 @@
 define(['./BeatType'], function(beatTypes) {
 	class Beat {
-		constructor(sk, radians, typeName=null) {
+		constructor(sk, radians, soundManager, typeName=null) {
 			this.sk = sk
 			this.radians = radians
 			this.defaultType = typeName
@@ -14,6 +14,7 @@ define(['./BeatType'], function(beatTypes) {
 
 			//initialized during preload
 			this.sounds = null
+			this.soundManager = soundManager
 		}
 		
 		incrementTypeIndex() {

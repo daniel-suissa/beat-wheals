@@ -2,7 +2,7 @@
 //////Wheel
 define(['./Beat', './common'], function(Beat, common) {
 	class Wheel {
-		constructor(sk ,x ,y, {radius, color, defaultBase=null, defaultBeatTypes=null}) {
+		constructor(sk ,x ,y, {radius, color, defaultBase=null, defaultBeatTypes=null}, soundManager) {
 			this.sk = sk
 			this.radius = common.getHeight(radius)
 			this.beats = this.createBeats({
@@ -15,6 +15,8 @@ define(['./Beat', './common'], function(Beat, common) {
 
 			this.dragOriginX = null
 			this.dragOriginY = null
+
+			this.soundManager = soundManager
 		}
 
 		createBeats({base=null, types=null}) {
@@ -29,7 +31,7 @@ define(['./Beat', './common'], function(Beat, common) {
 			let beats = []
 			for(var i = 0; i < num; i++) {
 				const radians = i * 2 * Math.PI / num
-				let beat = new Beat(this.sk, radians)
+				let beat = new Beat(this.sk, radians, this.soundManager)
 				beats.push(beat)
 			}
 			return beats
@@ -39,7 +41,7 @@ define(['./Beat', './common'], function(Beat, common) {
 			let beats = []
 			for(var i = 0; i < types.length; i++) {
 				const radians = i * 2 * Math.PI / types.length
-				let beat = new Beat(this.sk, radians, types[i])
+				let beat = new Beat(this.sk, radians, this.soundManager, types[i] )
 				beats.push(beat)
 			}
 			return beats
