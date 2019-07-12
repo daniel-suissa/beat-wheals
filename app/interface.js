@@ -8,23 +8,24 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);			
 			this.rpmSlider = null
 			this.lastPressedObj = null
-
 			this.createWheels(style);
 			this.createHand();
-			this.startOverlay();
 			this.draw = this.update
 		}
 
-		startOverlay() {
+		showOverlay() {
 			this.hand.stop()
-			$('.overlay-button').off()
-			$('.overlay-button').addClass('is-open')
-			$('.overlay-button').text("Loading...")
 			$('.overlay').addClass('is-open')
 
 		}
 
-		buttonStart() {
+		showLoadingButton() {
+			$('.overlay-button').off()
+			$('.overlay-button').addClass('is-open')
+			$('.overlay-button').text("Loading...")
+		}
+
+		showStartButton() {
 			$('.overlay-button').text("Start")
 			let that = this
 			$('.overlay-button').on('click', function() {
@@ -65,6 +66,8 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		}
 
 		preload() {
+			this.showOverlay();
+			this.showLoadingButton();
 			this.wheels.forEach( (wheel) => {
 				wheel.preload()
 			})
@@ -93,15 +96,34 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 			this.sel = this.sk.select('#dropdown')
 			//this.sel.changed(this.getStyleChangedListener()); 
 			$('#styles-button').on('click', () => {
-				this.hand.stop()
 				this.draw = this.clear
 				this.sk.noLoop()
-				this.openStylesMenu()
+				this.showOverlay();
+				this.showStylesMenu()
+			})
+
+			$('#info-button').on('click', () => {
+				this.draw = this.clear
+				this.sk.noLoop()
+				this.showOverlay();
+				this.showInfo()
 			})
 		}
 
-		openStylesMenu() {
-			$('.overlay').addClass('is-open')
+		createCloseButton() {
+			let exitButton = $('<a href="#" class="close-button"></a>')
+			exitButton.on('click', () => {
+				$('.styles-menu').remove()
+				$('.info').remove()
+				$('.overlay').removeClass('is-open')
+				this.hand.continue()
+				this.draw = this.update
+				this.sk.loop()
+			})
+			return exitButton
+		}
+
+		showStylesMenu() {
 			let menu = document.createElement('div')
 			$(menu).addClass('styles-menu')
 			$('.overlay').append(menu)
@@ -122,16 +144,39 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 				})
 				$(menu).append(elem)
 			})
-			let exitButton = $('<a href="#" class="close-button"></a>')
-			exitButton.on('click', () => {
-				menu.remove()
-				$('.overlay').removeClass('is-open')
-				this.hand.continue()
-				this.draw = this.update
-				this.sk.loop()
-			})
+			let closeButton = this.createCloseButton()
+			$(menu).append(closeButton)
+		}
 
-			$(menu).append(exitButton)
+		showInfo() {
+			let container = $('<div class="info"></div')
+			let description = $('<p class="description-text">\
+				Rotate the wheels and flip on the beats to create your own rhythm. <br>\
+				Speed things up or slow them down by sliding the RPM (revolutions per minute) \
+				slider on the bottom. <br>\
+				You can work off an empty template, or use an existing \
+				rhythm by clicking the little Djembe icon.</p>')
+			let legend = $('<div class="legend"></div')
+			Object.keys(config.beatsConfig.types).forEach((name, _i) => {
+				let formattedName = name.split('_')
+									.map((s) => s.charAt(0).toUpperCase()
+												+ s.substring(1))
+									.join(' ');
+				let legendElement = $(`
+					<div class="legend-element">
+						<div class="legend-icon" style="background-color: ${config.beatsConfig.types[name].color}"></div>
+						<p class="legend-text">${formattedName}</p>
+					</div>`)
+				legend.append(legendElement)
+			})
+			let closeButton = this.createCloseButton()
+
+			
+			container.append(description)
+			container.append(legend)
+			container.append(closeButton)
+			$('.overlay').append(container)
+
 		}
 
 		setup() {	
@@ -141,12 +186,13 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		    this.wheels.forEach((wheel) => {
 		    	wheel.setup()
 		    })
-		    this.buttonStart()	
+		    this.showStartButton()	
 		}
 
 		reset(style) {
 			console.log(`resetting to ${style}`)
-			this.startOverlay()
+			this.showOverlay()
+			this.showLoadingButton()
 			this.createWheels(style)
 			this.preload()
 			//this.sk.noLoop()
@@ -154,7 +200,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 		    	wheel.setup()
 		    })
 		    setTimeout(() => {
-		    	this.buttonStart()
+		    	this.showStartButton()
 				}, 4000)
 		}
 

@@ -125,15 +125,30 @@ select.sel-light:active {
   max-height:4vh;
 }
 
+#info-icon {
+  transform: translate(50%,50%);
+  max-width:2vh;
+  max-height:2vh;
+}
+
 #styles-button {
+  width: 8vh;
+  height: 8vh;
+}
+
+#info-button {
+  width: 4vh;
+  height: 4vh;
+}
+
+.ui-button {
     position: absolute;
     display: inline-block;
     margin-top: 6%;
     margin-left: 6%;
-    width: 8vh;
-    height: 8vh;
     border-radius: 4vh;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    color: yellow;
 }
 
 .styles-menu {
@@ -194,11 +209,35 @@ select.sel-light:active {
   }
 }
 
+.info {
+  color: white;
+  font-size: 3vh;
+  margin-top: 10vh;
+  margin-left: 15vw;
+  margin-right: 5vw;
+}
+
+.legend-element {
+  margin-bottom: 2vh;
+}
+
+.legend-icon {
+  display: inline-block;
+}
+.legend-text {
+  display: inline-block;
+  margin: 0%;
+}
 
 @media (min-width: 320px) {
   #styles-button {
     right: 14vw;
     top: 14vh;
+  }
+
+  #info-button {
+    left: 1vh;
+    top: 1vh;
   }
 
   .close-button {
@@ -209,6 +248,13 @@ select.sel-light:active {
       width: 15px;
     }
   }
+
+  .legend-icon {
+    width: 4vw;
+    height: 4vw;
+    border-radius: 2vw;
+    transform: translate(0%,14%);
+  }
 }
 
 @media (min-width: 1025px) {
@@ -216,6 +262,12 @@ select.sel-light:active {
     right: 28vw;
     top: 9vh;
   }
+
+  #info-button {
+    right: 28vw;
+    top: 2vh;
+  }
+
   .close-button {
     height: 70px;
     width: 10px;
@@ -223,5 +275,11 @@ select.sel-light:active {
       height: 70px;
       width: 10px;
     }
+  }
+  .legend-icon {
+    width: 1.4vw;
+    height: 1.4vw;
+    border-radius: 0.7vw;
+    transform: translate(0%,14%);
   }
 }
