@@ -39,6 +39,7 @@ define(['./config/common', './common'], function(config, common) {
 			const x3 = this.x + Math.sin(this.rotation) * this.length
 			const y3 = this.y - Math.cos(this.rotation) * this.length
 
+			this.sk.noStroke()
 			this.sk.fill(this.color)
 			this.sk.triangle(x1,y1,x2,y2,x3,y3)
 			

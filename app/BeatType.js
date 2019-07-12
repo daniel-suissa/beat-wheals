@@ -17,6 +17,7 @@ define(['./config/common', './common'], function(config, common) {
 				'',
 				config.beatsConfig.nullBeat.color,
 				config.beatsConfig.nullBeat.radius,
+				null,
 				config.beatsConfig.nullBeat.strokeColor,
 				config.beatsConfig.nullBeat.strokeWeight
 				))

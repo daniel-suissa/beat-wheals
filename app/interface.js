@@ -135,7 +135,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 				elem.setAttribute("id", "button-" + formattedOpt);
 				$(elem).addClass('menu-button')
 				$(elem).css("background-color", config.styleButtonColors[i++])
-				$(elem).css("height", + 70 / config.styleOptions.length +  'vh')
+				$(elem).css("height", + 50 / config.styleOptions.length +  'vh')
 				let that = this
 				$(elem).on('click', () => {
 					$('.overlay').removeClass('is-open')
@@ -155,7 +155,7 @@ define(['./Wheel', './Hand', './config/common', './common'], function (Wheel, Ha
 				Speed things up or slow them down by sliding the RPM (revolutions per minute) \
 				slider on the bottom. <br>\
 				You can work off an empty template, or use an existing \
-				rhythm by clicking the little Djembe icon.</p>')
+				rhythm by clicking the Djembe icon.</p>')
 			let legend = $('<div class="legend"></div')
 			Object.keys(config.beatsConfig.types).forEach((name, _i) => {
 				let formattedName = name.split('_')

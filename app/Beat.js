@@ -90,12 +90,13 @@ define(['./BeatType'], function(beatTypes) {
 
 			
 			if (this.currType.strokeColor) {
+				this.sk.noFill()
 				this.sk.stroke(this.currType.strokeColor)
 				this.sk.strokeWeight(this.currType.strokeWeight)
 			} else {
 				this.sk.noStroke()
+				this.sk.fill(this.currType.color)
 			}
-			this.sk.fill(this.currType.color)
 			this.sk.circle(x,y, this.currType.radius)	
 		}
 
@@ -105,8 +106,15 @@ define(['./BeatType'], function(beatTypes) {
 			const radius = this.currType.radius + 
 							Math.sin(Math.PI * portion) * 
 							(this.currType.swellRadius - this.currType.radius)
-			this.sk.fill(this.currType.color)
-			this.sk.noStroke()
+			
+			if (this.currType.strokeColor) {
+				this.sk.noFill()
+				this.sk.stroke(this.currType.strokeColor)
+				this.sk.strokeWeight(this.currType.strokeWeight)
+			} else {
+				this.sk.noStroke()
+				this.sk.fill(this.currType.color)
+			}
 
 			this.sk.circle(x,y,radius);
 		}

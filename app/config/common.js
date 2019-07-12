@@ -28,8 +28,8 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 			nullBeat: {
 					radius: 0.025,
 					color: '#5D5F8D',
-					strokeColor: '#5D5F8D',
-					strokeWeight: 0
+					strokeColor: '',
+					strokeWeight: 10
 				},
 			types: {
 				'type1': {
