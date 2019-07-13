@@ -1,36 +1,67 @@
 define(['./BeatType'], function(beatTypes) {
+	class Sound {
+		constructor(name, src) {
+			this.name = name
+			this.src = src
+			this.sound = null
+		}
+
+		play() {
+
+			if(this.name != 'nullBeat') {
+				this.sound.play()
+			}
+		}
+
+		currentTime() {
+			return this.sound.currentTime()
+		}
+
+		duration() {
+			return this.sound.duration()
+		}
+
+		stop() {
+			if(this.name != 'nullBeat') {
+				this.sound.stop()
+			}
+		}
+
+		loadSound(sk) {
+			if (this.name != 'nullBeat') {
+				this.sound = sk.loadSound(this.src)
+			}
+		}
+		
+	}
 	class SoundManager {
 		constructor(sk) {
 			this.sk = sk
 			this.sounds = []
 			for(var i = 0; i < beatTypes.length; i++) {
-				let soundObj = {
-					name: beatTypes[i].name,
-					src: beatTypes[i].src,
-					sound: null,
-					isPlaying: false
-				}
+				let soundObj = new Sound(beatTypes[i].name, beatTypes[i].src)
 				this.sounds.push(soundObj)
 			}
 		}
 
-		setup() {
-		}
+		setup() {}
 
 		preload() {
 			for(var i = 0; i < this.sounds.length; i ++) {
 				let soundObj = this.sounds[i]
-				if (soundObj.name != 'nullBeat') {
-					soundObj.sound = this.sk.loadSound(soundObj.src)
-					this.setSoundOnEndedCallback(soundObj.sound, soundObj)
-				}
+				soundObj.loadSound(this.sk)
 			}
 		}
-		getNextSound(soundName) {
+
+		getNextSound(soundName=null) {
+			if (!soundName) {
+				return this.sounds[0]
+			}
 			let i = this.sounds.findIndex(soundObj => {
 				return soundObj.name == soundName
 			})
-			i = (i + 1) / beatTypes.length
+			i = (i + 1) % beatTypes.length
+			this.sounds[i].stop()
 			return this.sounds[i]
 		}
 
@@ -40,30 +71,7 @@ define(['./BeatType'], function(beatTypes) {
 			})
 		}
 
-		setSoundOnEndedCallback (sound, soundObj) {
-			sound.onended( () => {
-				soundObj.isPlaying = false
-			})
-		}
-
-		playSound(soundObj) {
-			if(soundObj.name != 'nullBeat') {
-				soundObj.isPlaying = true
-				soundObj.sound.play()
-			}
-		}
-
-		isPlaying(soundObj) {
-			return soundObj.isPlaying
-		}
-
-		currentTime(soundObj) {
-			return soundObj.sound.currentTime()
-		}
-
-		duration(soundObj) {
-			return soundObj.sound.duration()
-		}
+		
 	}
 	return SoundManager
 })

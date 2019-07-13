@@ -3,6 +3,7 @@ define(['./Wheel', './Hand', './config/common', './common', './soundManager'], f
 	var Interface = class {
 		constructor(sk, style) {
 			this.sk = sk
+			this.soundManager = new SoundManager(sk)
 			this.wheels = [];
 			this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 			this.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);			
@@ -11,7 +12,6 @@ define(['./Wheel', './Hand', './config/common', './common', './soundManager'], f
 			this.createWheels(style);
 			this.createHand();
 			this.draw = this.update
-			this.soundManager = new SoundManager(sk)
 		}
 
 		showOverlay() {
@@ -74,7 +74,6 @@ define(['./Wheel', './Hand', './config/common', './common', './soundManager'], f
 			this.wheels.forEach( (wheel) => {
 				wheel.preload()
 			})
-			console.log(this.soundManager)
 		}
 
 		update() {

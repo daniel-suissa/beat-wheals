@@ -5,8 +5,8 @@ define(['./BeatType'], function(beatTypes) {
 			this.radians = radians
 			this.defaultType = typeName
 			this.enabled = true
-			this.isPlaying = false
-
+			this.maxSwellFrames = 20
+			this.swellFrames = this.maxSwellFrames
 			//initiazlied during setup
 			this.typeIndex = -1
 			this.currType = null
@@ -22,7 +22,7 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 		preload() {
-			this.loadSounds()
+			//this.loadSounds()
 		}
 
 		loadSounds() {
@@ -52,8 +52,7 @@ define(['./BeatType'], function(beatTypes) {
 			}
 			
 			this.currType = beatTypes[this.typeIndex]
-			this.currSound = null
-			this.currSound = this.sounds[this.typeIndex]
+			this.currSound = this.soundManager.getNextSound(this.defaultType)
 		}
 
 		addRadians(rotation) {
@@ -69,26 +68,16 @@ define(['./BeatType'], function(beatTypes) {
 			this.incrementTypeIndex()
 			this.currType = beatTypes[this.typeIndex]
 			this.enabled = true
-			this.isPlaying = false
-			if (this.sounds != null) {
-				this.currSound = this.sounds[this.typeIndex]
-			}
-		}
-
-		setSoundOnEndedCallback (sound, that) {
-			sound.onended( () => {
-				that.isPlaying = false
-			})
+			this.currSound = this.soundManager.getNextSound(this.currType.name)
 		}
 
 		draw(x, y) {
 			this.x = x
 			this.y = y
-
-			if (this.isPlaying) {
-				this.swell(x, y)
+			if(this.swellFrames < this.maxSwellFrames) {
+				this.swellFrames = Math.min(++this.swellFrames, this.maxSwellFrames)
+				this.swellUpdate(x, y)
 			}
-
 			
 			if (this.currType.strokeColor) {
 				this.sk.noFill()
@@ -101,9 +90,8 @@ define(['./BeatType'], function(beatTypes) {
 			this.sk.circle(x,y, this.currType.radius)	
 		}
 
-		swell(x, y) {
-			const portion = this.currSound.currentTime() / 
-							this.currSound.duration()
+		swellUpdate(x, y) {
+			const portion = this.swellFrames / this.maxSwellFrames
 			const radius = this.currType.radius + 
 							Math.sin(Math.PI * portion) * 
 							(this.currType.swellRadius - this.currType.radius)
@@ -116,14 +104,13 @@ define(['./BeatType'], function(beatTypes) {
 				this.sk.noStroke()
 				this.sk.fill(this.currType.color)
 			}
-
 			this.sk.circle(x,y,radius);
 		}
 
 		play() {
-			if (this.enabled && this.currSound) {
+			if (this.enabled && this.currType.name != 'nullBeat') {
 				try {
-					this.isPlaying = true
+					this.swellFrames = 0
 					this.currSound.play()
 				} catch (err) {
 					console.log(err)
@@ -132,9 +119,6 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 		mousePressed(_x, _y) {
-			if (this.isPlaying) {
-				return
-			}
 			this.nextType()
 			this.play()
 		}

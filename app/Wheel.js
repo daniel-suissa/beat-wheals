@@ -2,8 +2,13 @@
 //////Wheel
 define(['./Beat', './common'], function(Beat, common) {
 	class Wheel {
-		constructor(sk ,x ,y, {radius, color, defaultBase=null, defaultBeatTypes=null}, soundManager) {
+		constructor(sk ,x ,y, {radius, 
+							   color, 
+							   defaultBase=null, 
+							   defaultBeatTypes=null}, 
+					soundManager) {
 			this.sk = sk
+			this.soundManager = soundManager
 			this.radius = common.getHeight(radius)
 			this.beats = this.createBeats({
 								base: defaultBase,
@@ -15,8 +20,6 @@ define(['./Beat', './common'], function(Beat, common) {
 
 			this.dragOriginX = null
 			this.dragOriginY = null
-
-			this.soundManager = soundManager
 		}
 
 		createBeats({base=null, types=null}) {
