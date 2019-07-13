@@ -32,22 +32,22 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 					strokeWeight: 10
 				},
 			types: {
-				'type1': {
+				'bass_drum': {
 					radius: 0.03,
 					swellRadius: 0.04,
-					src: './assets/bass_sample.mp3',
+					src: './assets/CYCdh_AcouKick-01.wav',
 					color: '#32e5b2',
 				},
-				'type2': {
+				'snare_drum': {
 					radius: 0.04,
 					swellRadius: 0.045,
-					src: './assets/clap_sample.mp3',
+					src: './assets/Acoustic Snare-02.wav',
 					color: '#ff7373',
 				},
-				'type3': {
+				'hi_hat': {
 					radius: 0.05,
 					swellRadius: 0.06,
-					src: './assets/hh_sample.mp3',
+					src: './assets/Acoustic Hat-01.wav',
 					color: '#4f4ad6',
 				},
 				'djembe_bass': {
