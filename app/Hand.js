@@ -42,10 +42,8 @@ define(['./config/common', './common'], function(config, common) {
 			this.sk.noStroke()
 			this.sk.fill(this.color)
 			this.sk.triangle(x1,y1,x2,y2,x3,y3)
-			
-  			/*this.sk.line(this.x, this.y, 
-  				this.x + Math.sin(this.rotation) * this.length, 
-  				this.y - Math.cos(this.rotation) * this.length);*/
+
+  			this.prevRotation = this.rotation
   			this.rotation = (this.rotation + step) % (2 * Math.PI)
   			this.playIfNextBeatHit()
   			
@@ -67,15 +65,15 @@ define(['./config/common', './common'], function(config, common) {
 		}
 
 		isBeatHit(beat) {
-			const deltaFromBeat = Math.abs(this.rotation - beat.radians) 
-			if (deltaFromBeat < 0.1) {
+			// special case - beat is at 0 radians and the hand just went through
+			if (beat.radians == 0 && this.rotation < this.prevRotation) {
+				return true
+			}
+			if (this.rotation >= beat.radians && this.prevRotation <= beat.radians) {
 				return true
 			} 
-			return false
-		}
 
-		backToZero() {
-			this.rotation = 0
+			return false
 		}
 
 		stop() {
@@ -84,6 +82,7 @@ define(['./config/common', './common'], function(config, common) {
 		}
 		start() {
 			this.rotation = 0.98 * 2 * Math.PI
+			this.prevRotation = this.rotation
 			this.draw = this.update
 		}
 		continue() {
