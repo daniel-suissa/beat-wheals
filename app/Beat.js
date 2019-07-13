@@ -52,7 +52,7 @@ define(['./BeatType'], function(beatTypes) {
 			}
 			
 			this.currType = beatTypes[this.typeIndex]
-			this.currSound = this.soundManager.getSoundByName(this.defaultType)
+			this.currSound = this.soundManager.getSoundByName(this.currType.name)
 		}
 
 		addRadians(rotation) {
@@ -65,10 +65,10 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 		nextType() {
+			this.currSound = this.soundManager.getNextSound(this.currType.name)
 			this.incrementTypeIndex()
 			this.currType = beatTypes[this.typeIndex]
-			this.enabled = true
-			this.currSound = this.soundManager.getNextSound(this.currType.name)
+			this.enabled = true	
 		}
 
 		draw(x, y) {
