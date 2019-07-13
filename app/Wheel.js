@@ -81,13 +81,12 @@ define(['./Beat', './common'], function(Beat, common) {
 			// if intersects a beat, returns the beat
 			for(var i = 0; i < this.beats.length; i++) {
 				let beat = this.beats[i]
-				if (this.sk.dist(x, y, beat.x, beat.y) <= beat.currType.radius) {
+				if ( (beat.x && beat.y) && this.sk.dist(x, y, beat.x, beat.y) <= beat.currType.radius) {
 					return beat
 				}
 			}
 			
 			// if intersects the wheel, returns the wheel
-			
 			if (this.sk.dist(x, y, this.x, this.y) <= this.radius) {
 				return this
 			}

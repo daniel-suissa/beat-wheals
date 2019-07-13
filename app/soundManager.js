@@ -7,7 +7,6 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 		play() {
-
 			if(this.name != 'nullBeat') {
 				this.sound.play()
 			}
@@ -66,9 +65,10 @@ define(['./BeatType'], function(beatTypes) {
 		}
 
 		getSoundByName(soundName) {
-			return sounds.findIndex((soundObj) => {
+			let i = this.sounds.findIndex((soundObj) => {
 				return soundObj.name == soundName
 			})
+			return this.sounds[i]
 		}
 
 		

@@ -52,7 +52,7 @@ define(['./BeatType'], function(beatTypes) {
 			}
 			
 			this.currType = beatTypes[this.typeIndex]
-			this.currSound = this.soundManager.getNextSound(this.defaultType)
+			this.currSound = this.soundManager.getSoundByName(this.defaultType)
 		}
 
 		addRadians(rotation) {

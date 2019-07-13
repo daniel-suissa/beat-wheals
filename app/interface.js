@@ -193,7 +193,6 @@ define(['./Wheel', './Hand', './config/common', './common', './soundManager'], f
 		}
 
 		reset(style) {
-			console.log(`resetting to ${style}`)
 			this.showOverlay()
 			this.showLoadingButton()
 			this.createWheels(style)
