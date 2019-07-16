@@ -4,7 +4,7 @@ define([], function () {
 			{
 				radius: 0.1,
 				color: '#F9C909',
-				defaultBeatTypes: ['bass_drum', 'bass_drum']
+				defaultBeatTypes: ['bass_drum', 'nullBeat', 'bass_drum', 'nullBeat']
 			},
 			{
 				radius: 0.18,
@@ -14,8 +14,8 @@ define([], function () {
 			{
 				radius: 0.25,
 				color: '#189AA8',
-				defaultBeatTypes: ['nullBeat', 'nullBeat', 'hi_hat', 'nullBeat',
-								   'nullBeat', 'nullBeat', 'hi_hat', 'nullBeat'],
+				defaultBeatTypes: ['hi_hat', 'nullBeat', 'hi_hat', 'nullBeat',
+								   'hi_hat', 'nullBeat', 'hi_hat', 'nullBeat'],
 			}
 		],
 	}

@@ -4,26 +4,25 @@ define([], function () {
 			{
 				radius: 0.1,
 				color: '#F9C909',
-				defaultBase: 4,
+				defaultBeatTypes: ['conga_ghost', 'nullBeat',
+									'nullBeat', 'conga_ghost']
 			},
 			{
 				radius: 0.18,
 				color: '#F35844',
-				defaultBeatTypes: ['conga_right', 
-				'conga_right','conga_right','conga_right'
-				]
+				defaultBase: 3,
 			},
 			{
 				radius: 0.25,
 				color: '#189AA8',
-				defaultBeatTypes: ['nullBeat', 
-				'nullBeat', 'nullBeat', 'conga_left',
-				'nullBeat', 'nullBeat', 'conga_left',
+				defaultBeatTypes: ['conga_high', 
+				'nullBeat', 'nullBeat', 'conga_high',
+				'nullBeat', 'nullBeat', 'conga_high',
 				'nullBeat', 'nullBeat', 'nullBeat',
-				'conga_left', 'nullBeat', 'conga_left',
+				'conga_high', 'nullBeat', 'conga_high',
 				'nullBeat', 'nullBeat', 'nullBeat'
 				]
-			}
+			},
 		],
 	}
 });

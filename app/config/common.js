@@ -68,16 +68,16 @@ define(['./common', './empty', './4_on_the_floor','./tresillo', './son_clave'],
 					src: './assets/djembe_slap.wav',
 					color: '#ff6900'
 				},
-				'conga_right': {
+				'conga_high': {
 					radius: 0.04,
 					swellRadius: 0.045,
-					src: './assets/conga_right.wav',
+					src: './assets/conga_high.wav',
 					color: '#8b0304'
 				},
-				'conga_left': {
+				'conga_ghost': {
 					radius: 0.05,
 					swellRadius: 0.055,
-					src: './assets/conga_left.wav',
+					src: './assets/conga_ghost.wav',
 					color: '#c9c4af'
 				}
 			}
